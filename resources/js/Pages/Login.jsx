@@ -22,24 +22,24 @@ export default function Login() {
                     <form className="w-full flex flex-col items-center justify-center" onSubmit={handleSubmit}>
                         <div className="text-left w-full">
                             <h4 className="mb-3">Email/No.Hp</h4>
-                            <Input className="w-full mb-6" placeholder="Masukkan e-mail atau no. hp"/>
+                            <Input className="w-full mb-6" placeholder="Masukkan e-mail atau no. hp" required/>
                         </div>
                         <div className="text-left w-full">
                             <h4 className="mb-3">Password</h4>
-                            <Input className="w-full" type="password" placeholder="Masukkan password"/>
+                            <Input className="w-full" type="password" placeholder="Masukkan password" required/>
                             <InertiaLink href="/" className="w-fit float-right">
                                 <p className="text-right mt-5">Lupa password?</p>
                             </InertiaLink>
                         </div>
+                        <div className="w-full mt-10 flex items-center flex-col lg:flex-row justify-between">
+                            <div>
+                                <p className="text-left">Belum punya akun? <InertiaLink className="text-red-800" href="/register">Daftar Sekarang</InertiaLink></p>
+                            </div>
+                            <div className="float-right mt-5 w-full lg:mt-0 lg:w-fit">
+                                <Button className="rounded-none bg-amber-400 text-black w-1/4 lg:w-fit flex items-center justify-center" type="submit">Masuk</Button>
+                            </div>
+                        </div>
                     </form>
-                    <div className="w-full mt-10 flex items-center flex-col lg:flex-row justify-between">
-                        <div>
-                            <p className="text-left">Belum punya akun? <InertiaLink className="text-red-800" href="/register">Daftar Sekarang</InertiaLink></p>
-                        </div>
-                        <div className="float-right mt-5 w-full lg:mt-0 lg:w-fit">
-                            <Button className="rounded-none bg-amber-400 text-black w-1/4 lg:w-fit flex items-center justify-center" type="submit">Masuk</Button>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
