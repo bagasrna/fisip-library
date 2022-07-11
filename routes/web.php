@@ -34,3 +34,7 @@ require __DIR__.'/auth.php';
 Route::get('/login', function () {
     return Inertia::render('Login');
 });
+
+Route::get('/register', function () {
+    return Inertia::render('Register');
+});
