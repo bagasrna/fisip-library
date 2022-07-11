@@ -12,8 +12,8 @@ export default function Login() {
         <div className="flex flex-col h-screen lg:flex-row">
             <div className="w-full flex items-center lg:w-2/4" style={{ backgroundColor: "#FDF4AF" }}>
                 <div className="flex flex-col justify-center items-center lg:items-start w-full">
-                    <img className="ml-10 rotate-90 lg:rotate-0 w-16 lg:mt-10 mr-10 lg:mr-0 -mt-20" src="/images/logo.svg" />
-                    <img className="lg:ml-52 lg:absolute -mt-20 lg:mt-0 rotate-90 lg:rotate-0 w-60 h-fit" src="/images/login_image.svg" />
+                    <img className="ml-10 rotate-90 lg:rotate-0 w-16 lg:w-24 lg:mt-10 mr-10 lg:mr-0 -mt-20" src="/images/logo.svg" />
+                    <img className="lg:ml-52 lg:absolute -mt-20 lg:mt-0 rotate-90 lg:rotate-0 w-44 lg:w-60 h-fit" src="/images/login_image.svg" />
                 </div>
             </div>
             <div className="w-full flex flex-col items-center justify-center">
@@ -37,7 +37,7 @@ export default function Login() {
                             <p className="text-left">Belum punya akun? <InertiaLink className="text-red-800" href="/register">Daftar Sekarang</InertiaLink></p>
                         </div>
                         <div className="float-right mt-5 w-full lg:mt-0 lg:w-fit">
-                            <Button className="rounded-none bg-amber-400 text-black w-1/4 lg:w-fit flex items-center justify-center">Masuk</Button>
+                            <Button className="rounded-none bg-amber-400 text-black w-1/4 lg:w-fit flex items-center justify-center" type="submit">Masuk</Button>
                         </div>
                     </div>
                 </div>
