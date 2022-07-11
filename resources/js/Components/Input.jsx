@@ -9,6 +9,7 @@ export default function Input({
     required,
     isFocused,
     handleChange,
+    placeholder
 }) {
     const input = useRef();
 
@@ -21,6 +22,7 @@ export default function Input({
     return (
         <div className="flex flex-col items-start">
             <input
+                placeholder={placeholder}
                 type={type}
                 name={name}
                 value={value}
