@@ -31,10 +31,14 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/login', function () {
+Route::get('/signin', function () {
     return Inertia::render('Login');
 });
 
-Route::get('/register', function () {
+Route::get('/signup', function () {
     return Inertia::render('Register');
+});
+
+Route::get('/landing-page', function () {
+    return Inertia::render('LandingPage');
 });

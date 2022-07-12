@@ -34,7 +34,7 @@ export default function Register() {
                         </div>
                         <div className="w-full mt-10 flex items-center flex-col lg:flex-row justify-between">
                             <div>
-                                <p className="text-left">Sudah punya akun? <InertiaLink className="text-red-800" href="/login">Masuk</InertiaLink></p>
+                                <p className="text-left">Sudah punya akun? <InertiaLink className="text-red-800" href="/signin">Masuk</InertiaLink></p>
                             </div>
                             <div className="float-right mt-5 w-full lg:mt-0 lg:w-fit">
                                 <Button className="rounded-none bg-amber-400 text-black w-1/4 lg:w-fit flex items-center justify-center" type="submit">Daftar</Button>
