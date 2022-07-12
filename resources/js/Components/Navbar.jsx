@@ -5,9 +5,19 @@ import Button from "./Button";
 
 export default function Navbar() {
     const [open, setOpen] = React.useState(false);
+    const [isShadowed, setIsShadowed] = React.useState(false);
+
+    React.useEffect(() => {
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 200)
+                setIsShadowed(true);
+            else
+                setIsShadowed(false)
+        })
+    }, [])
 
     return (
-        <nav className="flex z-50 pl-20 pr-5 justify-between flex-col lg:flex-row lg:items-center fixed w-full top-0" style={{ backgroundColor: "#E9E4E5" }}>
+        <nav className={`flex z-50 pl-20 pr-5 justify-between flex-col lg:flex-row lg:items-center fixed w-full top-0 ${isShadowed ? "drop-shadow-xl" : ""} `} style={{ backgroundColor: "#E9E4E5" }}>
             <div className="nav-logo w-2/12">
                 <img src="/images/logo.svg" className="rotate-90" width="25" />
             </div>
@@ -27,9 +37,9 @@ export default function Navbar() {
                         <Input placeholder="Cari berdasarkan judul buku atau penulis" className="border-orange-300 w-full mb-5 -ml-5" />
                     </form>
                 </div>
-                <div className="search-buttons flex justify-around w-full -ml-12">
-                    <Button className="bg-amber-400 text-black">Rak Buku</Button>
-                    <Button className="bg-amber-400 text-black">Perpustakaan</Button>
+                <div className="search-buttons flex flex-col justify-around w-full -ml-12">
+                    <Button className="bg-amber-400 text-black mb-2">Rak Buku</Button>
+                    <Button className="bg-amber-400 text-black mb-2">Perpustakaan</Button>
                     <Button className="bg-red-500 text-black">Masuk</Button>
                 </div>
             </div>
