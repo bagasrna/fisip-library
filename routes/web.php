@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleController;
 use Inertia\Inertia;
 
 /*
@@ -29,3 +30,23 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
+<<<<<<< Updated upstream
+=======
+
+Route::get('/signin', function () {
+    return Inertia::render('Login');
+});
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('login');
+
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::get('/signup', function () {
+    return Inertia::render('Register');
+});
+
+Route::get('/landing-page', function () {
+    return Inertia::render('LandingPage');
+});
+
+>>>>>>> Stashed changes
