@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GoogleController;
 use Inertia\Inertia;
 
 /*
@@ -15,6 +16,10 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/test', function() {
+    return view ('test');
+});
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -27,5 +32,23 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/signin', function () {
+    return Inertia::render('Login');
+});
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('login');
+
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+Route::post('/logout', [GoogleController::class, 'destroy']);
+
+Route::get('/signup', function () {
+    return Inertia::render('Register');
+});
+
+Route::get('/landing-page', function () {
+    return Inertia::render('LandingPage');
+})->middleware('auth');
 
 require __DIR__.'/auth.php';
