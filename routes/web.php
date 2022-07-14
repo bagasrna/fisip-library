@@ -30,8 +30,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
-<<<<<<< Updated upstream
-=======
 
 Route::get('/signin', function () {
     return Inertia::render('Login');
@@ -49,4 +47,3 @@ Route::get('/landing-page', function () {
     return Inertia::render('LandingPage');
 });
 
->>>>>>> Stashed changes
