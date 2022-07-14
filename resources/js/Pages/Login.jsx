@@ -37,6 +37,7 @@ export default function Login() {
                             </div>
                             <div className="float-right mt-5 w-full lg:mt-0 lg:w-fit">
                                 <Button className="rounded-none bg-amber-400 text-black w-1/4 lg:w-fit flex items-center justify-center" type="submit">Masuk</Button>
+                                <a href="auth/google">Google</a>
                             </div>
                         </div>
                     </form>

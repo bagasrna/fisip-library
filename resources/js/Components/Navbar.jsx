@@ -9,7 +9,7 @@ export default function Navbar() {
 
     React.useEffect(() => {
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 200)
+            if(window.scrollY > 200)
                 setIsShadowed(true);
             else
                 setIsShadowed(false)
