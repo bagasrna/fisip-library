@@ -34,9 +34,6 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 //authentication
-// Route::get('/', function () {
-//     return Inertia::render('Login');
-// });
 Route::get('/signin', [GoogleController::class, 'login'])->name('signin')->middleware('guest');
 Route::post('/signout', [GoogleController::class, 'logout']);
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('login');
