@@ -1,4 +1,3 @@
-
 export default function CardBook() {
     return (
         <div className="card p-5 max-w-xs rounded-3xl m-5" style={{ boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)" }}>
