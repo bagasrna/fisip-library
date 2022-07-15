@@ -35,7 +35,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/signin', function () {
     return Inertia::render('Login');
-});
+})->name('signin');
 
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('login');
 
