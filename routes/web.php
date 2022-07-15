@@ -35,7 +35,7 @@ Route::get('/dashboard', function () {
 
 //authentication
 Route::get('/signin', [GoogleController::class, 'login'])->name('signin')->middleware('guest');
-Route::post('/signout', [GoogleController::class, 'logout']);
+Route::post('/signout', [GoogleController::class, 'logout'])->name('signout');
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 Route::get('/signup', function () {
