@@ -8,6 +8,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
   
 class GoogleController extends Controller
 {
@@ -38,7 +39,7 @@ class GoogleController extends Controller
        
                 Auth::login($finduser);
       
-                return redirect('/landing-page');
+                return redirect('/dashboard');
        
             }else{
                 $data = [
@@ -58,7 +59,7 @@ class GoogleController extends Controller
                 ]);
 
                 Auth::login($newUser);
-                return redirect('/landing-page');
+                return redirect('/dashboard');
             }
       
         } catch (Exception $e) {
@@ -66,7 +67,12 @@ class GoogleController extends Controller
         }
     }
 
-    public function destroy(Request $request)
+    public function login()
+    {
+        return Inertia::render('Login');
+    }
+
+    public function logout(Request $request)
     {
         Auth::guard('web')->logout();
 
@@ -74,6 +80,6 @@ class GoogleController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/signin');
     }
 }

@@ -20,7 +20,7 @@ Route::get('/test', function() {
     return view ('test');
 });
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -33,21 +33,20 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/signin', function () {
-    return Inertia::render('Login');
-})->name('signin');
-
+//authentication
+// Route::get('/', function () {
+//     return Inertia::render('Login');
+// });
+Route::get('/signin', [GoogleController::class, 'login'])->name('signin')->middleware('guest');
+Route::post('/signout', [GoogleController::class, 'logout']);
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('login');
-
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
-
-Route::post('/logout', [GoogleController::class, 'destroy']);
-
 Route::get('/signup', function () {
     return Inertia::render('Register');
 });
 
-Route::get('/landing-page', function () {
+//dashboard
+Route::get('/dashboard', function () {
     return Inertia::render('LandingPage');
 })->middleware('auth');
 
