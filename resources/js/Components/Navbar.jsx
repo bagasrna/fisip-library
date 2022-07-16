@@ -54,7 +54,7 @@ export default function Navbar() {
             <div className="nav-logo w-2/12">
                 <img src="/images/logo.svg" className="rotate-90" width="25" />
             </div>
-            <div className="search-box w-3/5 hidden lg:block">
+            <div className={`search-box w-full -ml-6 lg:-ml-0 lg:w-3/5 mb-3 lg:mb-0 lg:block ${open ? "" : "hidden"}`}>
                 <form className="w-full">
                     <Input placeholder="Cari berdasarkan judul buku atau penulis" className="border-orange-300 w-full" />
                 </form>
@@ -64,11 +64,6 @@ export default function Navbar() {
                 <Button className="bg-amber-400 text-black py-2 lg:ml-3">Perpustakaan</Button>
             </div>
             <div className={`collapse ${open ? "" : "hidden"} lg:hidden flex w-full flex-col items-center pb-5`}>
-                <div className="search-box w-full">
-                    <form className="w-full">
-                        <Input placeholder="Cari berdasarkan judul buku atau penulis" className="border-orange-300 w-full mb-5 -ml-6" />
-                    </form>
-                </div>
                 <div className="search-buttons flex flex-col justify-around w-full -ml-12">
                     <Button className="bg-amber-400 text-black mb-2">Rak Buku</Button>
                     <Button className="bg-amber-400 text-black mb-2">Perpustakaan</Button>
