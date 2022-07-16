@@ -18,29 +18,23 @@ export default function Login() {
             </div>
             <div className="w-full flex flex-col items-center justify-center">
                 <div className="text-center w-full flex flex-col items-center justify-center m-auto py-10 px-10 lg:px-32 lg:py-0">
-                    <h3 className="text-5xl mb-5">Masuk</h3>
-                    <form className="w-full flex flex-col items-center justify-center" onSubmit={handleSubmit}>
-                        <div className="text-left w-full">
-                            <h4 className="mb-3">Email/No.Hp</h4>
-                            <Input className="w-full mb-6" placeholder="Masukkan e-mail atau no. hp" required/>
+                    <h3 className="text-5xl mb-5 font-bold">Masuk</h3>
+                    <div className="max-w-4xl px-4 text-gray-800 bg-white rounded-lg">
+                        <div className="mb-2 relative">
+                            <div className="h-3 text-3xl text-left text-gray-600">“</div>
+                            <p className="px-4 text-base text-center leading-8 text-gray-600">
+                            Makin aku banyak membaca, makin aku banyak berpikir; makin aku banyak belajar, makin aku sadar bahwa aku tak mengetahui apa pun
+                            </p>
+                            <div className="text-3xl text-right text-gray-600 lg:-mt-5 mr-10">”</div>
+                            <p className="md:mt-2 text-lg font-bold">- Voltaire -</p>
                         </div>
-                        <div className="text-left w-full">
-                            <h4 className="mb-3">Password</h4>
-                            <Input className="w-full" type="password" placeholder="Masukkan password" required/>
-                            <InertiaLink href="/" className="w-fit float-right">
-                                <p className="text-right mt-5">Lupa password?</p>
-                            </InertiaLink>
-                        </div>
-                        <div className="w-full mt-10 flex items-center flex-col lg:flex-row justify-between">
-                            <div>
-                                <p className="text-left">Belum punya akun? <InertiaLink className="text-red-800" href="/signup">Daftar Sekarang</InertiaLink></p>
-                            </div>
-                            <div className="float-right mt-5 w-full lg:mt-0 lg:w-fit">
-                                <Button className="rounded-none bg-amber-400 text-black w-1/4 lg:w-fit flex items-center justify-center" type="submit">Masuk</Button>
-                                <a href="auth/google">Google</a>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
+                    <a href="auth/google" className="w-full mt-5">
+                        <button className="flex w-1/2 bg-[#F8BC61] focus:bg-[#d8b073] fill-black text-black border-[#F8BC61] border-2  hover:bg-white justify-center items-center bg-transparent border-1 p-2 m-auto duration-300 hover:drop-shadow-lg transition-all hover:rounded-xl">
+                            <img src="/images/google-icon.svg" width="20" />
+                            <span className="ml-2">Google</span>
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
