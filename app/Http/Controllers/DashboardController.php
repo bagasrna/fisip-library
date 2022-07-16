@@ -9,6 +9,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return Inertia::render('LandingPage');
+        return Inertia::render('LandingPage', [
+            'name' => auth()->user()->name
+        ]);
     }
 }

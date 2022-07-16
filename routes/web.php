@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
@@ -38,11 +39,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 //authentication
-// Route::get('/', function () {
-//     return Inertia::render('Login');
-// });
 Route::get('/signin', [GoogleController::class, 'login'])->name('signin')->middleware('guest');
-Route::post('/signout', [GoogleController::class, 'logout']);
+Route::post('/signout', [GoogleController::class, 'logout'])->name('signout');
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 Route::get('/signup', function () {
@@ -50,9 +48,7 @@ Route::get('/signup', function () {
 });
 
 //dashboard
-Route::get('/dashboard', function () {
-    return Inertia::render('LandingPage');
-})->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 //search result page
 Route::get('/result', function () {
