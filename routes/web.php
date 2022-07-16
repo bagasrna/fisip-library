@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GoogleController;
@@ -47,8 +48,6 @@ Route::get('/signup', function () {
 });
 
 //dashboard
-Route::get('/dashboard', function () {
-    return Inertia::render('LandingPage');
-})->middleware('auth');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
 require __DIR__.'/auth.php';
