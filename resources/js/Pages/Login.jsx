@@ -35,6 +35,7 @@ export default function Login() {
                             <span className="ml-2">Google</span>
                         </button>
                     </a>
+                    <p className="mt-5">Login dengan Email UB</p>
                 </div>
             </div>
         </div>

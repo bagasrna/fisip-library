@@ -1,55 +1,53 @@
 import Navbar from '../Components/Navbar';
-import { useLocation } from 'react-router-dom';
 import React from 'react';
 import CardBook from '@/Components/CardBook';
+import CustomFooter from '@/Components/CustomFooter';
 
 export default function Result() {
     const [searchValue, setSearchValue] = React.useState('');
     const [bookDatas, setBookDatas] = React.useState([]);
     const temp = "temp";
-    let datas = [];
 
-    const fetchingData = () => {
+    const fetchingData = async (searchValue) => {
         setBookDatas([]);
-        if (searchValue !== '') {
-            console.log(searchValue);
-            fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchValue}`)
-                .then(res => res.json())
-                .then(res => {
-                    if (res.items !== undefined)
-                        res.items.forEach(item => {
-                            // setBookDatas((prev) => [...prev, item])
-                            datas.push(item);
-                        });
-                        setBookDatas(datas);
-                    console.log(bookDatas)
-                })
-                .catch(err => {
-                    console.log(err);
-                })
-        }
+        await fetch(`https://www.googleapis.com/books/v1/volumes?q=${searchValue}`)
+            .then(res => res.json())
+            .then(res => {
+                if (res.items !== undefined) {
+                    res.items.forEach(item => {
+                        setBookDatas((prev) => [...prev, item])
+                    });
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     React.useEffect(() => {
-        setSearchValue(window.location.href.substring(43, window.location.href.length));
-        // console.log("changed")   
+        setSearchValue(localStorage.getItem("searchValue"));
     }, [temp])
 
     React.useEffect(() => {
-        if (searchValue !== "temp")
-            fetchingData();
+        if(searchValue !== '')
+        fetchingData(localStorage.getItem("searchValue"));
     }, [searchValue])
 
 
     return (
         <div>
-            <Navbar searchValue={searchValue} setSearchValue={setSearchValue} fetchingData={fetchingData} />
-            <div className='bg-red-500 mt-96'>
-                <p className=''>
-                    {searchValue}
-                </p>
-                <CardBook />
+            <Navbar searchValue={searchValue} userName={localStorage.getItem("UserName")} setSearchValue={setSearchValue} />
+            <div className='mt-40 pb-9'>
+                <div className='flex flex-wrap justify-center min-h-screen'>
+                    {
+                        bookDatas.length !== 0 ? 
+                        bookDatas.map(item => (
+                            <CardBook key={item.id} title={item.volumeInfo?.title} author={item.volumeInfo?.authors} publisher={item?.publisher} rate={'5.0'} image={item.volumeInfo.imageLinks?.smallThumbnail}/>
+                        )) : <p>Maaf, hasil tidak ditemukan</p>
+                    }
+                </div>
             </div>
+            <CustomFooter/>
         </div>
     );
 }
