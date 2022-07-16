@@ -52,4 +52,9 @@ Route::get('/signup', function () {
 //dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 
+//search result page
+Route::get('/result', function () {
+    return Inertia::render('Result');
+})->middleware('auth');
+
 require __DIR__.'/auth.php';

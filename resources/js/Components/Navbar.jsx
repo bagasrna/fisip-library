@@ -1,19 +1,24 @@
-import Input from "@/Components/Input";
 import React from "react";
 import Button from "./Button";
 import $ from "jquery";
+import { Inertia } from '@inertiajs/inertia'
 
-export default function Navbar() {
+export default function Navbar({ userName, setSearchValue }) {
     const [open, setOpen] = React.useState(false);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [isShadowed, setIsShadowed] = React.useState(false);
+    const [value, setValue] = React.useState('');
 
     React.useEffect(() => {
+        let isMounted = true;
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 200)
+            if (window.scrollY > 200 && isMounted)
                 setIsShadowed(true);
-            else
+            else if (window.scrollY <= 200 && isMounted)
                 setIsShadowed(false)
+            return () => {
+                isMounted = false;
+            }
         })
     }, [])
 
@@ -27,6 +32,7 @@ export default function Navbar() {
         })
             .then(res => {
                 console.log(res);
+                localStorage.clear();
                 window.location.reload();
             })
             .catch(err => {
@@ -34,15 +40,22 @@ export default function Navbar() {
             })
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        localStorage.setItem("UserName", userName);
+        localStorage.setItem("searchValue", value);
+        if(window.location.pathname === "/result"){
+            setSearchValue(value)
+        } else {
+            Inertia.visit("/result", {
+                method: 'get'
+        }, 1500)
+    }
+    }
+
     const dropDownData = [
         {
             id: 1,
-            name: "Profile",
-            href: "#",
-            action: () => { }
-        },
-        {
-            id: 3,
             name: "Sign Out",
             href: "",
             action: handleClick
@@ -55,23 +68,22 @@ export default function Navbar() {
                 <img src="/images/logo.svg" className="rotate-90" width="25" />
             </div>
             <div className={`search-box w-full -ml-6 lg:-ml-0 lg:w-3/5 mb-3 lg:mb-0 lg:block ${open ? "" : "hidden"}`}>
-                <form className="w-full">
-                    <Input placeholder="Cari berdasarkan judul buku atau penulis" className="border-orange-300 w-full" />
+                <form className="w-full" onSubmit={handleSubmit}>
+                    <input placeholder="Cari berdasarkan judul buku atau penulis" className="border-orange-300 w-full p-2 focus:outline-slate-400" onChange={(e) => setValue(e.target.value)} />
+                    <input type="submit" className="hidden"/>
                 </form>
             </div>
             <div className="search-buttons w-2/5 justify-end hidden lg:flex">
                 <Button className="bg-amber-400 text-black py-2">Rak Buku</Button>
-                <Button className="bg-amber-400 text-black py-2 lg:ml-3">Perpustakaan</Button>
             </div>
             <div className={`collapse ${open ? "" : "hidden"} lg:hidden flex w-full flex-col items-center pb-5`}>
                 <div className="search-buttons flex flex-col justify-around w-full -ml-12">
                     <Button className="bg-amber-400 text-black mb-2">Rak Buku</Button>
-                    <Button className="bg-amber-400 text-black mb-2">Perpustakaan</Button>
-                    <DropDownButton className="w-full flex justify-center" datas={dropDownData} action={handleClick} setOpenDialog={setOpenDialog} openDialog={openDialog} beginningIcon={
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            } />
+                    <DropDownButton userName={userName} className="w-full flex justify-center" datas={dropDownData} action={handleClick} setOpenDialog={setOpenDialog} openDialog={openDialog} beginningIcon={
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    } />
                 </div>
             </div>
             <Button className="absolute right-10 top-8 lg:hidden bg-transparent" onClick={() => setOpen(!open)}>
@@ -79,7 +91,7 @@ export default function Navbar() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </Button>
-            <DropDownButton className="justify-center hidden lg:flex lg:ml-3" datas={dropDownData} action={handleClick} setOpenDialog={setOpenDialog} openDialog={openDialog} beginningIcon={
+            <DropDownButton userName={userName} className="justify-center hidden lg:flex lg:ml-3" datas={dropDownData} action={handleClick} setOpenDialog={setOpenDialog} openDialog={openDialog} beginningIcon={
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -88,7 +100,7 @@ export default function Navbar() {
     );
 }
 
-export const DropDownButton = ({ openDialog, setOpenDialog, beginningIcon, datas, className }) => {
+export const DropDownButton = ({ openDialog, setOpenDialog, beginningIcon, datas, className, userName }) => {
     return (
         <div className={className}>
             <div className="w-full">
@@ -103,10 +115,9 @@ export const DropDownButton = ({ openDialog, setOpenDialog, beginningIcon, datas
                     >
                         {beginningIcon}
                         <span className="ml-2">
-                            Akun Saya
+                            {userName}
                         </span>
                         <svg
-                            // aria-hidden="true"
                             focusable="false"
                             data-prefix="fas"
                             data-icon="caret-down"
@@ -132,7 +143,7 @@ export const DropDownButton = ({ openDialog, setOpenDialog, beginningIcon, datas
                                         onClick={item.action}
                                         className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
                                         href={item.href}>{item.name}
-                                        </button>
+                                    </button>
                                 </li>
                             ))
                         }
