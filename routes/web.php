@@ -54,4 +54,9 @@ Route::get('/dashboard', function () {
     return Inertia::render('LandingPage');
 })->middleware('auth');
 
+//search result page
+Route::get('/result', function () {
+    return Inertia::render('Result');
+})->middleware('auth');
+
 require __DIR__.'/auth.php';
