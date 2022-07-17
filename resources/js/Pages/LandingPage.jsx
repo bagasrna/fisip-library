@@ -18,11 +18,21 @@ export default function LandingPage({name}) {
                 </div>
             </div>
             <main className="px-5 py-20 flex justify-center flex-wrap">
-                <CardBook/>
-                <CardBook/>
-                <CardBook/>
-                <CardBook/>
-                <CardBook/>
+                <div className="m-5 min-w-[25%]">
+                    <CardBook/>
+                </div>
+                <div className="m-5 min-w-[25%]">
+                    <CardBook/>
+                </div>
+                <div className="m-5 min-w-[25%]">
+                    <CardBook/>
+                </div>
+                <div className="m-5 min-w-[25%]">
+                    <CardBook/>
+                </div>
+                <div className="m-5 min-w-[25%]">
+                    <CardBook/>
+                </div>
             </main>
             <CustomFooter/>
         </div>

@@ -31,7 +31,11 @@ export default function Result() {
     React.useEffect(() => {
         if(searchValue !== '')
         fetchingData(localStorage.getItem("searchValue"));
-    }, [searchValue])
+    }, [searchValue]);
+
+    const handleClick = (id) => {
+        localStorage.setItem("bookId", id);
+    }
 
 
     return (
@@ -42,7 +46,9 @@ export default function Result() {
                     {
                         bookDatas.length !== 0 ? 
                         bookDatas.map(item => (
-                            <CardBook key={item.id} title={item.volumeInfo?.title} author={item.volumeInfo?.authors} publisher={item?.publisher} rate={'5.0'} image={item.volumeInfo.imageLinks?.smallThumbnail}/>
+                            <a onClick={() => handleClick(item.id)} key={item.id} href='/detail' className='m-5 min-w-[25%]'>
+                                <CardBook title={item.volumeInfo?.title} author={item.volumeInfo?.authors} publisher={item?.publisher} rate={'5.0'} image={item.volumeInfo.imageLinks?.smallThumbnail}/>
+                            </a>
                         )) : <p>Maaf, hasil tidak ditemukan</p>
                     }
                 </div>
