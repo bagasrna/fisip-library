@@ -10,11 +10,14 @@ class BookController extends Controller
 {
     public function index()
     {
-        return view ('test', [
+        return Inertia::render('LandingPage', [
             'books' => Book::all()
         ]);
-        
-        return Inertia::render('LandingPage', [
+    }
+
+    public function test()
+    {
+        return view ('test', [
             'books' => Book::all()
         ]);
     }
