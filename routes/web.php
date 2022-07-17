@@ -57,4 +57,9 @@ Route::get('/result', function () {
     return Inertia::render('Result');
 })->middleware('auth');
 
+//book detail page
+Route::get('/detail', function () {
+    return Inertia::render('DetailBuku');
+})->middleware('auth');
+
 require __DIR__.'/auth.php';

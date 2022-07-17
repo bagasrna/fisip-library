@@ -1,6 +1,6 @@
 export default function CardBook({title, author, rate, publisher, image}) {
     return (
-        <div className="card p-5 max-w-xs rounded-3xl m-5 min-w-[25%]" style={{ boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)" }}>
+        <div className="card p-5 max-w-xs rounded-3xl" style={{ boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.25)" }}>
             <div className="card-image min-h-[450px]">
                 <img src={window.location.pathname === "/result" ? image : "/images/book-cover.svg"} width="100%" />
             </div>
