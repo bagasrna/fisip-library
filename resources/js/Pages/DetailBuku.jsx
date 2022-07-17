@@ -70,7 +70,7 @@ export default function DetailBuku() {
                                 <div>
                                     <div className="my-7">
                                         <h4 className="font-bold">ISBN</h4>
-                                        <p>{bookData?.volumeInfo?.industryIdentifiers[0].identifier}</p>
+                                        <p>{bookData?.volumeInfo?.industryIdentifiers[0]?.identifier}</p>
                                     </div>
                                     <div className="my-7">
                                         <h4 className="font-bold">Jumlah Stok</h4>
@@ -87,7 +87,7 @@ export default function DetailBuku() {
                                         <p>{bookData?.volumeInfo?.language}</p>
                                     </div>
                                 </div>
-                            </div> : <div className="mt-10">{`${bookData?.volumeInfo?.description}`}</div>
+                            </div> : <div className="mt-10" dangerouslySetInnerHTML={{__html: bookData?.volumeInfo?.description}}></div>
                         }
 
                     </div>
