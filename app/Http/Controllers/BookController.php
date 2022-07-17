@@ -11,6 +11,7 @@ class BookController extends Controller
     public function index()
     {
         return Inertia::render('LandingPage', [
+            'name' => auth()->user()->name,
             'books' => Book::all()
         ]);
     }

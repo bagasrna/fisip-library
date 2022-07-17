@@ -38,7 +38,7 @@ Route::get('/signup', function () {
 });
 
 //dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', [BookController::class, 'index'])->middleware('auth');
 Route::get('/dashboard/test', [BookController::class, 'test'])->middleware('auth');
 //search result page
 Route::get('/result', function () {
