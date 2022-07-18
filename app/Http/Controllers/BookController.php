@@ -47,4 +47,11 @@ class BookController extends Controller
         ]);
     }
 
+    public function test2(Book $book)
+    {
+        return view('test2', [
+            "book" => $book
+        ]);
+    }
+
 }

@@ -18,6 +18,7 @@
   <h1>Judul : {{ $book->title }}</h1>
   <h1>Author : {{ $book->author }}</h1>
   <h1>Category : {{ $book->category->name }}</h1>
+  <a href="/test/{{ $book->id }}" class="btn btn-primary">Detail</a>
   <h1><br></h1>
   @endforeach
 @else

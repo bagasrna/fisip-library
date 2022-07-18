@@ -19,6 +19,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/test', [BookController::class, 'test'])->middleware('auth');
+Route::get('/test/{book:id}', [BookController::class, 'test2'])->middleware('auth');
 
 Route::get('/', function() {
     return Inertia::render('Begin');
