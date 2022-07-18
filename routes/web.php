@@ -18,11 +18,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/test', function() {
-    return view ('test', [
-        'name' => auth()->user()->name
-    ]);
-});
+Route::get('/test', [BookController::class, 'test'])->middleware('auth');
 
 Route::get('/', function() {
     return Inertia::render('Begin');
@@ -39,8 +35,7 @@ Route::get('/signup', function () {
 
 //dashboard
 Route::get('/dashboard', [BookController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/test', [BookController::class, 'test'])->middleware('auth');
-Route::post('/dashboard/detail', [BookController::class, 'detail'])->middleware('auth');
+Route::post('/dashboard/{book:id}', [BookController::class, 'detail'])->middleware('auth');
 //search result page
 Route::get('/result', function () {
     return Inertia::render('Result');
