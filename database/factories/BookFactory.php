@@ -17,7 +17,12 @@ class BookFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => $this->faker->sentence(mt_rand(2,4)), //membuat kata yang panjangnya random antara 2 sampai 4 kata
+            'description' => collect($this->faker->paragraphs(mt_rand(5,10)))
+                        ->map(fn($p) => "<p>$p</p>")
+                        ->implode(''),
+            'author' => $this->faker->name(),
+            'category_id' => mt_rand(1,3)
         ];
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -17,28 +18,12 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/test', [BookController::class, 'test'])->middleware('auth');
+Route::get('/test/{book:id}', [BookController::class, 'test2'])->middleware('auth');
+
 Route::get('/', function() {
     return Inertia::render('Begin');
 });
-
-Route::get('/test', function() {
-    return view ('test', [
-        'name' => auth()->user()->name
-    ]);
-});
-
-Route::get('/welcome', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 //authentication
 Route::get('/signin', [GoogleController::class, 'login'])->name('signin')->middleware('guest');
@@ -50,6 +35,16 @@ Route::get('/signup', function () {
 });
 
 //dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', [BookController::class, 'index'])->middleware('auth');
+Route::post('/dashboard/{book:id}', [BookController::class, 'detail'])->middleware('auth');
+//search result page
+Route::get('/result', function () {
+    return Inertia::render('Result');
+})->middleware('auth');
+
+//book detail page
+Route::get('/detail', function () {
+    return Inertia::render('DetailBuku');
+})->middleware('auth');
 
 require __DIR__.'/auth.php';
