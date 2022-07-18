@@ -2,7 +2,7 @@ import CardBook from "@/Components/CardBook";
 import CustomFooter from "@/Components/CustomFooter";
 import Navbar from "@/Components/Navbar";
 import Pagination from "@/Components/Pagination";
-import { Head } from "@inertiajs/inertia-react";
+import { Head, InertiaLink } from "@inertiajs/inertia-react";
 
 export default function LandingPage({ name, books }) {
     const handleCategory = (obj) => {
@@ -38,9 +38,9 @@ export default function LandingPage({ name, books }) {
                         books?.data?.length !== 0 ?
                             books?.data?.map((book) => {
                                 return (
-                                    <a onClick={() => handleClick(book)} href={`/dashboard/${book?.id}`} key={book?.id} className="m-5 lg:min-w-[25%] min-w-full">
+                                    <InertiaLink onClick={() => handleClick(book)} href={`/dashboard/${book?.id}`} key={book?.id} className="m-5 lg:min-w-[25%] min-w-full">
                                         <CardBook title={book?.title} category={handleCategory(book)} author={book?.author} />
-                                    </a>
+                                    </InertiaLink>
                                 );
                             })
                             : <div>Data Buku Tidak Ditemukan</div>
