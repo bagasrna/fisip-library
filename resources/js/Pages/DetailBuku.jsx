@@ -32,9 +32,7 @@ export default function DetailBuku({name, book}) {
                     <div className="detail-content w-full">
                         <div className="flex items-center lg:items-start justify-between flex-col lg:flex-row mt-5 mb-10 lg:mt-0 lg:mb-0">
                             <div className="book-title text-center lg:text-start">
-                                {/* <h1 className="text-3xl font-bold">{bookData?.volumeInfo?.title}</h1> */}
                                 <h1 className="text-3xl font-bold">{book?.title}</h1>
-                                {/* <p className="mt-2">{bookData?.volumeInfo?.authors}</p> */}
                                 <p className="mt-2">{book?.author}</p>
                             </div>
                             <div className="star-rating flex mt-5 lg:mt-0">
@@ -47,10 +45,10 @@ export default function DetailBuku({name, book}) {
                         </div>
                         <div className="tabs flex items-center justify-between mb-3 lg:mt-7">
                             <div className="w-2/5">
-                                <h3 onClick={handleDetail} className={`cursor-pointer border-b-2 transition duration-300 ${selectDetail ? 'border-gray-900' : 'border-transparent'} md:text-center pb-2`}>Detail Buku</h3>
+                                <h3 onClick={handleDetail} className={`cursor-pointer border-b-2 transition duration-300 ${selectDetail ? 'border-gray-900 font-bold' : 'border-transparent'} md:text-center pb-2`}>Detail Buku</h3>
                             </div>
                             <div className="w-2/5">
-                                <h3 onClick={handleSinopsis} className={`cursor-pointer border-b-2 ${selectSinopsis ? 'border-gray-900' : 'border-transparent'} transition duration-300  md:text-center pb-2`}>Sinopsis</h3>
+                                <h3 onClick={handleSinopsis} className={`cursor-pointer border-b-2 ${selectSinopsis ? 'border-gray-900 font-bold' : 'border-transparent'} transition duration-300  md:text-center pb-2`}>Sinopsis</h3>
                             </div>
                         </div>
                         {
@@ -87,7 +85,6 @@ export default function DetailBuku({name, book}) {
                                 </div>
                             </div> 
                             : 
-                            // <div className="mt-10" dangerouslySetInnerHTML={{__html: bookData?.volumeInfo?.description}}></div>
                             <div className="mt-10  lg:mt-20" dangerouslySetInnerHTML={{__html: book?.description}}></div>
                         }
 
