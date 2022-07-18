@@ -40,6 +40,7 @@ Route::get('/signup', function () {
 //dashboard
 Route::get('/dashboard', [BookController::class, 'index'])->middleware('auth');
 Route::get('/dashboard/test', [BookController::class, 'test'])->middleware('auth');
+Route::post('/dashboard/detail', [BookController::class, 'detail'])->middleware('auth');
 //search result page
 Route::get('/result', function () {
     return Inertia::render('Result');
