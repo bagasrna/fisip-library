@@ -36,15 +36,15 @@ Route::get('/signup', function () {
 
 //dashboard
 Route::get('/dashboard', [BookController::class, 'index'])->middleware('auth');
-Route::post('/dashboard/{book:id}', [BookController::class, 'detail'])->middleware('auth');
+Route::get('/dashboard/{book:id}', [BookController::class, 'detail'])->middleware('auth');
 //search result page
 Route::get('/result', function () {
     return Inertia::render('Result');
 })->middleware('auth');
 
 //book detail page
-Route::get('/detail', function () {
-    return Inertia::render('DetailBuku');
-})->middleware('auth');
+// Route::get('/detail', function () {
+//     return Inertia::render('DetailBuku');
+// })->middleware('auth');
 
 require __DIR__.'/auth.php';
