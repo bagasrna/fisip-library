@@ -3,6 +3,7 @@ import CustomFooter from "@/Components/CustomFooter";
 import Navbar from "@/Components/Navbar";
 import Pagination from "@/Components/Pagination";
 import { Head, InertiaLink } from "@inertiajs/inertia-react";
+import React from "react";
 
 export default function LandingPage({ name, books }) {
     const handleCategory = (obj) => {
@@ -18,6 +19,10 @@ export default function LandingPage({ name, books }) {
         localStorage.setItem("bookData", JSON.stringify(obj));
     }
 
+    React.useEffect(() => {
+        localStorage.setItem("books", JSON.stringify(books));
+    }, [])
+
     return (
         <div>
             <Head title="Dashboard" />
@@ -31,7 +36,7 @@ export default function LandingPage({ name, books }) {
                     <img src="/images/jumbotron-image-only.svg" className="w-96 md:absolute top-40 right-10 lg:right-40 -scale-x-100" />
                 </div>
             </div>
-            <div>
+            <div className="min-h-[300px]">
                 <p className="ml-10 mt-10 font-italic">Menampilkan <span className="font-bold">{books?.data?.length}</span> dari <span className="font-bold">{books?.total}</span> data</p>
                 <main className="px-5 pt-7 pb-10 flex justify-center flex-wrap">
                     {

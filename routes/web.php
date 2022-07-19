@@ -47,4 +47,9 @@ Route::get('/result', function () {
 //     return Inertia::render('DetailBuku');
 // })->middleware('auth');
 
+// dashboard admin
+Route::get('/dashboard-admin', function () {
+    return Inertia::render('Admin/AdminDashboard');
+})->middleware('auth');
+
 require __DIR__.'/auth.php';
