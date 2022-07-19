@@ -1,3 +1,5 @@
+import { InertiaLink } from "@inertiajs/inertia-react";
+
 export default function Pagination({ links }) {
 
     return (

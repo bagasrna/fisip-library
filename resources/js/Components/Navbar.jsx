@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import $ from "jquery";
+import { InertiaLink } from "@inertiajs/inertia-react";
 
 export default function Navbar({ userName }) {
     const [open, setOpen] = React.useState(false);
@@ -50,9 +51,9 @@ export default function Navbar({ userName }) {
     return (
         <nav className={`flex z-50 pl-20 pr-5 justify-between flex-col lg:flex-row lg:items-center fixed w-full top-0 ${isShadowed ? "drop-shadow-xl" : ""} `} style={{ backgroundColor: "#E9E4E5" }}>
             <div className="nav-logo w-2/12">
-                <a href="/dashboard" className="w-fit">
+                <InertiaLink href="/dashboard" className="w-fit">
                     <img src="/images/logo.svg" className="rotate-90" width="25" />
-                </a>
+                </InertiaLink>
             </div>
             <div className={`search-box w-full -ml-6 lg:-ml-0 lg:w-3/5 mb-3 lg:mb-0 lg:block ${open ? "" : "hidden"}`}>
                 <form action="/dashboard" className="w-full">
