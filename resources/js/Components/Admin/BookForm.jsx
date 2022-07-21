@@ -1,8 +1,24 @@
 import React from "react";
 
 export default function BookForm({ setOpenDialog, openDialog, book, setBook, role }) {
+    const addBookHandler = (id) => {
+
+    }
+
+    const editBookHandler = (id) => {
+
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(role === 'tambah'){
+            // fetch to add book
+            addBookHandler(book?.id)
+        }
+        else if(role === 'edit') {
+            // fetch to edit book
+            editBookHandler(book?.id);
+        }
     }
 
     return (

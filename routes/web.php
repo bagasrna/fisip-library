@@ -47,6 +47,16 @@ Route::get('/result', function () {
 //     return Inertia::render('DetailBuku');
 // })->middleware('auth');
 
+// login dashboard admin
+Route::get('/dashboard-admin-login', function () {
+    return Inertia::render('Admin/LoginAdmin');
+})->middleware('auth');
+
+// Register dashboard admin
+Route::get('/dashboard-admin-register', function () {
+    return Inertia::render('Admin/RegisterAdmin');
+});
+
 // dashboard admin
 Route::get('/dashboard-admin', function () {
     return Inertia::render('Admin/AdminDashboard');

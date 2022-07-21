@@ -51,7 +51,7 @@ export default function AdminDashboard() {
                 <BookForm books={bookData} setOpenDialog={setOpenDialog} setBook={setBook} openDialog={openDialog} book={book} role={role}/>
             </div>
             <div>
-                <DeleteBookForm openDeleteDialog={openDeleteDialog} setOpenDeleteDialog={setOpenDeleteDialog}/>
+                <DeleteBookForm book={book} setBook={setBook} openDeleteDialog={openDeleteDialog} setOpenDeleteDialog={setOpenDeleteDialog}/>
             </div>
         </div>
     );
