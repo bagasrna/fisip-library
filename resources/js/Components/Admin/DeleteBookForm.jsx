@@ -1,8 +1,14 @@
+import { motion } from "framer-motion";
+
 export default function DeleteBookForm({openDeleteDialog, setOpenDeleteDialog, book, setBook}) {
     return (
         <div id="authentication-modal" tabIndex="-1" className={`overflow-y-auto ${openDeleteDialog ? "" : "hidden"} overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-full justify-center items-center flex `} aria-modal="true" role="dialog" style={{ backgroundColor: 'rgba(0, 0, 0, 0.47)' }}>
             <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                <div className="relative bg-white rounded-lg shadow-xl dark:bg-gray-700">
+                <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="relative bg-white rounded-lg shadow-xl dark:bg-gray-700">
                     <button onClick={() => { 
                         setBook(null);
                         setOpenDeleteDialog(false)
@@ -16,7 +22,7 @@ export default function DeleteBookForm({openDeleteDialog, setOpenDeleteDialog, b
                         <button className="bg-[#F8BC61] 
                                 hover:bg-yellow-600 duration-200 focus:outline-yellow-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center text-black">Hapus Item</button>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </div>
     );

@@ -1,4 +1,5 @@
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function BookForm({ setOpenDialog, openDialog, book, setBook, role }) {
     const addBookHandler = (id) => {
@@ -11,11 +12,11 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(role === 'tambah'){
+        if (role === 'tambah') {
             // fetch to add book
             addBookHandler(book?.id)
         }
-        else if(role === 'edit') {
+        else if (role === 'edit') {
             // fetch to edit book
             editBookHandler(book?.id);
         }
@@ -26,11 +27,16 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
             {
                 book === null ? <></> :
                     <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
-                        <div className="relative bg-white rounded-lg shadow-xl dark:bg-gray-700">
-                            <button onClick={() => { 
+                        <motion.div
+                            initial={{ y: 30, opacity: 0 }}
+                            whileInView={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            exit={{ y: -10, opacity: 0 }}
+                            className="relative block bg-white rounded-lg shadow-xl dark:bg-gray-700">
+                            <button onClick={() => {
                                 setBook(null);
-                                setOpenDialog(false) 
-                                }} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
+                                setOpenDialog(false)
+                            }} type="button" className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="authentication-modal">
                                 <svg aria-hidden="true" className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"></path></svg>
                                 <span className="sr-only">Close modal</span>
                             </button>
@@ -66,10 +72,10 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
                                         </div>
                                         <button type="submit" className="w-full bg-[#F8BC61] 
                                 hover:bg-yellow-600 duration-200 focus:outline-yellow-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center text-black">
-                                    {
-                                        role === 'tambah' ? 'Tambahkan Buku' : 'Edit Buku'
-                                    }
-                                </button>
+                                            {
+                                                role === 'tambah' ? 'Tambahkan Buku' : 'Edit Buku'
+                                            }
+                                        </button>
                                     </div>
                                     <div className="ml-5 w-2/5">
                                         <div>
@@ -79,10 +85,10 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
                                     </div>
                                 </form>
                             </div>
-                        </div>
+
+                        </motion.div>
                     </div>
             }
         </div>
-
     );
 }
