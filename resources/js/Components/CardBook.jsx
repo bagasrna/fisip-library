@@ -1,6 +1,13 @@
+import { motion } from "framer-motion";
+
 export default function CardBook({ title, author, rate, publisher, image, category }) {
     return (
-        <div className="relative card p-5 lg:max-w-xs rounded-3xl min-h-[200px] shadow-none hover:shadow-lg transition duration-300 border-2">
+        <motion.div
+        initial={{ y: 10, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        viewport={{once: true}}
+        className="relative card p-5 lg:max-w-xs rounded-3xl min-h-[200px] shadow-none hover:shadow-lg transition duration-300 border-2">
             {/* <div className="card-image min-h-[450px]">
                 <img src={window.location.pathname === "/result" ? image : "/images/book-cover.svg"} width="100%" />
             </div> */}
@@ -21,6 +28,6 @@ export default function CardBook({ title, author, rate, publisher, image, catego
                     <p>{window.location.pathname === "/result" ? publisher : category}</p>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }

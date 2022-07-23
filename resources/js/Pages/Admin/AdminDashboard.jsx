@@ -3,6 +3,7 @@ import BookForm from "@/Components/Admin/BookForm";
 import DataTable from "@/Components/Admin/DataTable";
 import DeleteBookForm from "@/Components/Admin/DeleteBookForm";
 import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function AdminDashboard() {
     const [bookData, setBookData] = React.useState([]);
@@ -10,10 +11,15 @@ export default function AdminDashboard() {
     const [book, setBook] = React.useState(null);
     const [role, setRole] = React.useState('');
     const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
+    const [searchValue, setSearchValue] = React.useState('');
 
     React.useEffect(() => {
         setBookData(JSON.parse(localStorage.getItem('books')));
     }, [])
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
 
     return (
         <div>
@@ -34,16 +40,16 @@ export default function AdminDashboard() {
                         </button>
                     </div>
                     <div className="search-bar pl-10 mb-5">
-                        <form className="w-2/5">
-                            <input className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="cari berdasarkan judul atau penulis" />
-                            <input className="hidden" type="submit" />
+                        <form className="w-2/5" onSubmit={handleSubmit} >
+                            <input className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="cari berdasarkan judul atau penulis" onChange={(e) => setSearchValue(e.target.value)}/>
+                            <button type="submit">Kumpulkan</button>
                         </form>
                     </div>
                     <div className="result pl-10 mb-5">
                         <p>Showing {bookData?.data?.length} of {bookData?.total} result</p>
                     </div>
                     <div className="px-10 mb-10">
-                        <DataTable books={bookData} setOpenDeleteDialog={setOpenDeleteDialog} setOpenDialog={setOpenDialog} setBook={setBook} setRole={setRole}/>
+                        <DataTable searchValue={searchValue} books={bookData} setOpenDeleteDialog={setOpenDeleteDialog} setOpenDialog={setOpenDialog} setBook={setBook} setRole={setRole}/>
                     </div>
                 </div>
             </div>
@@ -51,7 +57,7 @@ export default function AdminDashboard() {
                 <BookForm books={bookData} setOpenDialog={setOpenDialog} setBook={setBook} openDialog={openDialog} book={book} role={role}/>
             </div>
             <div>
-                <DeleteBookForm openDeleteDialog={openDeleteDialog} setOpenDeleteDialog={setOpenDeleteDialog}/>
+                <DeleteBookForm book={book} setBook={setBook} openDeleteDialog={openDeleteDialog} setOpenDeleteDialog={setOpenDeleteDialog}/>
             </div>
         </div>
     );
