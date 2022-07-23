@@ -21,6 +21,7 @@ export default function LandingPage({ name, books }) {
 
     React.useEffect(() => {
         localStorage.setItem("books", JSON.stringify(books));
+        console.log(books);
     }, [])
 
     return (
