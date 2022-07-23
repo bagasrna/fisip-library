@@ -32,6 +32,14 @@ class BookController extends Controller
         ]);
     }
 
+    public function rak()
+    {
+        return Inertia::render('Rak', [
+            'name' => auth()->user()->name,
+            'categories' => Category::all()
+        ]);
+    }
+
     public function test()
     {
         $books = Book::latest();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Foundation\Application;
@@ -18,8 +19,8 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/test', [BookController::class, 'test'])->middleware('auth');
-Route::get('/test/{book:id}', [BookController::class, 'test2'])->middleware('auth');
+Route::get('/test', [BookController::class, 'test'])->middleware('auth:web');
+Route::get('/test/{book:id}', [BookController::class, 'test2'])->middleware('auth:web');
 
 Route::get('/', function() {
     return Inertia::render('Begin');
@@ -30,36 +31,26 @@ Route::get('/signin', [GoogleController::class, 'login'])->name('signin')->middl
 Route::post('/signout', [GoogleController::class, 'logout'])->name('signout');
 Route::get('auth/google', [GoogleController::class, 'redirectToGoogle'])->name('login');
 Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
-Route::get('/signup', function () {
-    return Inertia::render('Register');
-});
 
 //dashboard
-Route::get('/dashboard', [BookController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/{book:id}', [BookController::class, 'detail'])->middleware('auth');
-//search result page
-Route::get('/result', function () {
-    return Inertia::render('Result');
-})->middleware('auth');
-
-//book detail page
-// Route::get('/detail', function () {
-//     return Inertia::render('DetailBuku');
-// })->middleware('auth');
+Route::get('/dashboard', [BookController::class, 'index'])->middleware('auth:web');
+Route::get('/dashboard/{book:id}', [BookController::class, 'detail'])->middleware('auth:web');
+Route::get('/dashboard/rak-buku', [BookController::class, 'rak'])->middleware('auth:web'); // mengembalikan array 'categories' yang berisi category-category
 
 // login dashboard admin
-Route::get('/dashboard-admin-login', function () {
-    return Inertia::render('Admin/LoginAdmin');
-})->middleware('auth');
+Route::get('/admin/signin', [AdminController::class, 'login'])->name('admin.signin')->middleware('guest');
+Route::post('/admin/signin', [AdminController::class, 'authenticate']);
+Route::post('/admin/signout', [LoginController::class, 'logout']);
 
 // Register dashboard admin
-Route::get('/dashboard-admin-register', function () {
-    return Inertia::render('Admin/RegisterAdmin');
-});
+Route::get('/admin/signup', [AdminController::class, 'register'])->middleware('guest');
+Route::post('/admin/signup', [AdminController::class, 'store']);
 
 // dashboard admin
-Route::get('/dashboard-admin', function () {
-    return Inertia::render('Admin/AdminDashboard');
-})->middleware('auth');
+Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('auth:admin');
+Route::post('/admin/create', [AdminController::class, 'create']); // add buku
+Route::post('/admin/update', [AdminController::class, 'update']); // edit buku
+Route::post('/admin/delete', [AdminController::class, 'delete']); // edit buku
+
 
 require __DIR__.'/auth.php';
