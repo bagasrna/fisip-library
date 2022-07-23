@@ -7,7 +7,6 @@ export default function RegisterAdmin() {
         name: null,
         email: null,
         password: null,
-        phone: null,
     };
 
     const [user, setUser] = React.useReducer(
@@ -66,12 +65,8 @@ export default function RegisterAdmin() {
                     <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required onChange={e => setUser({email: e.target.value})}  />
                 </div>
                 <div className="mb-6">
-                    <label htmlFor="Telepon" className="block mb-2 text-sm text-gray-900 dark:text-gray-300 font-bold">Telepon</label>
-                    <input type="text" id="telepon" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="nomor telepon" defaultValue={user.phone} onChange={e => setUser({phone: e.target.value})}  pattern="^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{4}[\s-]?\d{2,5}$" maxLength={13} required />
-                </div>
-                <div className="mb-6">
                     <label htmlFor="password" className="block mb-2 text-sm text-gray-900 dark:text-gray-300 font-bold">Password Anda</label>
-                    <input type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required onChange={e => setUser({password: e.target.value})}  />
+                    <input type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required onChange={e => setUser({password: e.target.value})} placeholder="password anda" />
                 </div>
                 <button type="submit" className="bg-[#F8BC61] w-full p-2 hover:bg-yellow-600 hover:shadow-lg hover:border-yellow-600 border-[#F8BC61] border-2 transition duration-300 font-bold flex items-center justify-center rounded-lg">Daftar</button>
                 <div className="mt-5">
