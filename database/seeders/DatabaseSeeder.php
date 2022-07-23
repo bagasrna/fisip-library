@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Admin;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -26,6 +27,12 @@ class DatabaseSeeder extends Seeder
 
         Category::create([
             'name' => 'Personal'
+        ]);
+
+        Admin::create([
+            'name' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'password' => 'admin123'
         ]);
 
         Book::factory(40)->create();
