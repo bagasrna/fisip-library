@@ -105,4 +105,56 @@ class AdminController extends Controller
 
         return redirect('/admin/dashboard')->with('success', 'Book has been deleted!');
     }
+
+    public function test()
+    {
+        return view('test');
+    }
+
+    public function test2(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required|email:dns|unique:admins',
+            'password' => 'required|min:5|max:255'
+        ]);
+
+        $validatedData['password'] = Hash::make($validatedData['password']);
+
+        Admin::create($validatedData);
+
+        return redirect('/test/signin')->with('success', 'Registration seccessfull! Please login');
+    }
+
+    public function test3()
+    {
+        return view('test2');
+    }
+
+    public function test4(Request $request)
+    {
+        if(Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password]))
+        {
+            $request->session()->regenerate();
+            return redirect()->intended('/test/dashboard');
+        }
+
+        return back()->with('loginError', 'Login failed!');
+    }
+
+    public function test5()
+    {
+        return view('test3');
+    }
+
+    public function test6(Request $request)
+    {
+        Auth::guard('admin')->logout();
+     
+        $request->session()->invalidate();
+     
+        $request->session()->regenerateToken();
+     
+        return redirect('/test/signin');
+    }
 }

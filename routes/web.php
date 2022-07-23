@@ -19,8 +19,14 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/test', [BookController::class, 'test'])->middleware('auth:web');
-Route::get('/test/{book:id}', [BookController::class, 'test2'])->middleware('auth:web');
+Route::get('/test/signup', [AdminController::class, 'test']);
+Route::post('/test/signup', [AdminController::class, 'test2']);
+
+Route::get('/test/signin', [AdminController::class, 'test3']);
+Route::post('/test/signin', [AdminController::class, 'test4']);
+Route::post('/test/signout', [AdminController::class, 'test6']);
+
+Route::get('/test/dashboard', [AdminController::class, 'test5'])->middleware('auth:admin');
 
 Route::get('/', function() {
     return Inertia::render('Begin');
@@ -40,7 +46,7 @@ Route::get('/dashboard/rak-buku', [BookController::class, 'rak'])->middleware('a
 // login dashboard admin
 Route::get('/admin/signin', [AdminController::class, 'login'])->name('admin.signin')->middleware('guest');
 Route::post('/admin/signin', [AdminController::class, 'authenticate']);
-Route::post('/admin/signout', [LoginController::class, 'logout']);
+Route::post('/admin/signout', [AdminController::class, 'logout']);
 
 // Register dashboard admin
 Route::get('/admin/signup', [AdminController::class, 'register'])->middleware('guest');
