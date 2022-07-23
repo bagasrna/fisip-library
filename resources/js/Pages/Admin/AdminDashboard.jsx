@@ -4,6 +4,7 @@ import DataTable from "@/Components/Admin/DataTable";
 import DeleteBookForm from "@/Components/Admin/DeleteBookForm";
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Popup from "@/Components/Admin/Popup";
 
 export default function AdminDashboard() {
     const [bookData, setBookData] = React.useState([]);
@@ -12,6 +13,9 @@ export default function AdminDashboard() {
     const [role, setRole] = React.useState('');
     const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState('');
+    const [title, setTitle] = React.useState('');
+    const [status, setStatus] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
         setBookData(JSON.parse(localStorage.getItem('books')));
@@ -42,7 +46,7 @@ export default function AdminDashboard() {
                     <div className="search-bar pl-10 mb-5">
                         <form className="w-2/5" onSubmit={handleSubmit} >
                             <input className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="cari berdasarkan judul atau penulis" onChange={(e) => setSearchValue(e.target.value)}/>
-                            <button type="submit">Kumpulkan</button>
+                            <input type="submit" className="hidden"/>
                         </form>
                     </div>
                     <div className="result pl-10 mb-5">
@@ -54,11 +58,12 @@ export default function AdminDashboard() {
                 </div>
             </div>
             <div>
-                <BookForm books={bookData} setOpenDialog={setOpenDialog} setBook={setBook} openDialog={openDialog} book={book} role={role}/>
+                <BookForm setTitle={setTitle} setStatus={setStatus} setOpen={setOpen} books={bookData} setOpenDialog={setOpenDialog} setBook={setBook} openDialog={openDialog} book={book} role={role}/>
             </div>
             <div>
-                <DeleteBookForm book={book} setBook={setBook} openDeleteDialog={openDeleteDialog} setOpenDeleteDialog={setOpenDeleteDialog}/>
+                <DeleteBookForm setTitle={setTitle} setStatus={setStatus} setOpen={setOpen} book={book} setBook={setBook} openDeleteDialog={openDeleteDialog} setOpenDeleteDialog={setOpenDeleteDialog}/>
             </div>
+            <Popup title={title} status={status} open={open}/>
         </div>
     );
 }

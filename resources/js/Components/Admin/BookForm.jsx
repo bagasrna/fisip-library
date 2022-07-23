@@ -1,13 +1,58 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function BookForm({ setOpenDialog, openDialog, book, setBook, role }) {
+export default function BookForm({ setOpenDialog, openDialog, book, setBook, role, setStatus, setTitle, setOpen }) {
     const addBookHandler = (id) => {
-
+        fetch('https://reqres.in/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({"name": "morpheus", "job": "leader"})
+        })
+        .then(res => res.json())
+        .then(res => {
+            setOpenDialog(false);
+            if (res?.error) {
+                setTitle(res?.error);
+                throw new Error('error')
+            } else {
+                setTitle('Berhasil Menambahkan Buku');
+                setStatus(true);
+                setOpen(true);
+                setTimeout(() => {
+                    setOpen(false);
+                    window.location.reload();
+                }, 2000)
+            }
+        })
     }
 
     const editBookHandler = (id) => {
-
+        fetch('https://reqres.in/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(res => res.json())
+        .then(res => {
+            setOpenDialog(false);
+            console.log(res);
+            if (res?.error) {
+                setTitle(res?.error);
+                throw new Error('error')
+            } else {
+                setTitle('Berhasil Mengedit Buku');
+                setStatus(true);
+                setOpen(true);
+                setTimeout(() => {
+                    setOpen(false);
+                    window.location.reload();
+                }, 2000)
+            }
+        })
     }
 
     const handleSubmit = (e) => {
