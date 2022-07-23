@@ -22,6 +22,7 @@
         "vite": "^2.9.11"
     },
     "dependencies": {
+        "framer-motion": "^6.5.1",
         "jquery": "^3.6.0",
         "js-cookie": "^3.0.1",
         "react-router-dom": "^6.3.0"

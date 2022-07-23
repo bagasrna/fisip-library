@@ -1,13 +1,12 @@
 import React from "react";
 import Button from "./Button";
 import $ from "jquery";
-import { Inertia } from '@inertiajs/inertia'
+import { InertiaLink } from "@inertiajs/inertia-react";
 
-export default function Navbar({ userName, setSearchValue }) {
+export default function Navbar({ userName }) {
     const [open, setOpen] = React.useState(false);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [isShadowed, setIsShadowed] = React.useState(false);
-    const [value, setValue] = React.useState('');
 
     React.useEffect(() => {
         let isMounted = true;
@@ -40,19 +39,6 @@ export default function Navbar({ userName, setSearchValue }) {
             })
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        localStorage.setItem("UserName", userName);
-        localStorage.setItem("searchValue", value);
-        if(window.location.pathname === "/result"){
-            setSearchValue(value)
-        } else {
-            Inertia.visit("/result", {
-                method: 'get'
-        }, 1500)
-    }
-    }
-
     const dropDownData = [
         {
             id: 1,
@@ -65,11 +51,13 @@ export default function Navbar({ userName, setSearchValue }) {
     return (
         <nav className={`flex z-50 pl-20 pr-5 justify-between flex-col lg:flex-row lg:items-center fixed w-full top-0 ${isShadowed ? "drop-shadow-xl" : ""} `} style={{ backgroundColor: "#E9E4E5" }}>
             <div className="nav-logo w-2/12">
-                <img src="/images/logo.svg" className="rotate-90" width="25" />
+                <InertiaLink href="/dashboard" className="w-fit">
+                    <img src="/images/logo.svg" className="rotate-90" width="25" />
+                </InertiaLink>
             </div>
             <div className={`search-box w-full -ml-6 lg:-ml-0 lg:w-3/5 mb-3 lg:mb-0 lg:block ${open ? "" : "hidden"}`}>
-                <form className="w-full" onSubmit={handleSubmit}>
-                    <input placeholder="Cari berdasarkan judul buku atau penulis" className="border-orange-300 w-full p-2 focus:outline-slate-400" onChange={(e) => setValue(e.target.value)} />
+                <form action="/dashboard" className="w-full">
+                    <input name="search" placeholder="Cari berdasarkan judul buku atau penulis" className="border-orange-300 w-full p-2 border-0 rounded-lg focus:border-amber-400 block focus:ring-blue-500 focus:outline-none focus:border-2"/>
                     <input type="submit" className="hidden"/>
                 </form>
             </div>
