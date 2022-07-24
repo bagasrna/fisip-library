@@ -1,6 +1,9 @@
 import Popup from "@/Components/Admin/Popup";
 import { InertiaLink } from "@inertiajs/inertia-react";
 import React from "react";
+import $ from 'jquery';
+import axios from "axios";
+import { Inertia } from "@inertiajs/inertia";
 
 export default function RegisterAdmin() {
     const userInitState = {
@@ -20,36 +23,11 @@ export default function RegisterAdmin() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let data = { "email": user.email, "password": user.password };
-        fetch('https://reqres.in/api/register', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
+        Inertia.post('/admin/signup', {
+            'name': user.name,
+            'email': user.email,
+            'password': user.password
         })
-            .then(res => res.json())
-            .then(res => {
-                console.log(res);
-                if (res?.error) {
-                    setTitle(res?.error);
-                    throw new Error('Oh no')
-                } else {
-                    setTitle('Berhasil Register');
-                    setStatus(true);
-                    setOpen(true);
-                    setTimeout(() => {
-                        setOpen(false);
-                    }, 2000)
-                }
-            })
-            .catch(() => {
-                setStatus(false);
-                setOpen(true);
-                setTimeout(() => {
-                    setOpen(false);
-                }, 2000)
-            })
     }
 
     return (
@@ -70,7 +48,7 @@ export default function RegisterAdmin() {
                 </div>
                 <button type="submit" className="bg-[#F8BC61] w-full p-2 hover:bg-yellow-600 hover:shadow-lg hover:border-yellow-600 border-[#F8BC61] border-2 transition duration-300 font-bold flex items-center justify-center rounded-lg">Daftar</button>
                 <div className="mt-5">
-                    <div>Sudah memiliki akun admin? <InertiaLink href="/dashboard-admin-login"><span className="text-yellow-600">Masuk</span></InertiaLink></div>
+                    <div>Sudah memiliki akun admin? <InertiaLink href="/admin/signin"><span className="text-yellow-600">Masuk</span></InertiaLink></div>
                 </div>
                 <Popup title={title} open={open} status={status} />
             </form>

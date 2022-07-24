@@ -6,7 +6,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Popup from "@/Components/Admin/Popup";
 
-export default function AdminDashboard() {
+export default function AdminDashboard({name, categories}) {
     const [bookData, setBookData] = React.useState([]);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [book, setBook] = React.useState(null);
@@ -23,12 +23,13 @@ export default function AdminDashboard() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(categories)
     }
 
     return (
         <div>
             <div className="dashboard-container min-h-screen flex lg:flex-row flex-col">
-                <AdminNavbar />
+                <AdminNavbar name={name}/>
                 <div className="book-data w-full h-screen overflow-y-scroll">
                     <div className="px-10 pt-10 pb-5 flex items-center justify-between w-full">
                         <p className="text-2xl font-bold">Data Buku</p>

@@ -1,7 +1,14 @@
 import React from "react";
+import axios from "axios";
+import $ from 'jquery';
+import { Inertia } from "@inertiajs/inertia";
 
-export default function AdminNavbar({ className }) {
+export default function AdminNavbar({ className, name }) {
     const [active, setActive] = React.useState(true);
+
+    const handleClick = () => {
+        Inertia.post('/admin/signout')
+    }
 
     const navbarData = [
         {
@@ -18,7 +25,7 @@ export default function AdminNavbar({ className }) {
             icon: <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
             </svg>,
-            action: () => { }
+            action: handleClick
         }
     ]
 
@@ -26,7 +33,7 @@ export default function AdminNavbar({ className }) {
         <div className="bg-[#F8BC61] lg:w-1/5 w-full">
             <div className="admin-data p-5 mt-5 w-full">
                 <p className="font-bold text-3xl">Welcome</p>
-                <p className="font-bold mt-5">Redomeire</p>
+                <p className="font-bold mt-5">{name}</p>
                 <div className="flex items-center w-full">
                     <p>example@student.ub.ac.id</p>
                 </div>
@@ -37,7 +44,7 @@ export default function AdminNavbar({ className }) {
                     {
                         navbarData?.map(item => {
                             return (
-                                <button className="w-full flex items-center p-5 hover:bg-gray-600 hover:text-white bg-transparent transition duration-200" key={item.id}>
+                                <button onClick={item.action} className="w-full flex items-center p-5 hover:bg-gray-600 hover:text-white bg-transparent transition duration-200" key={item.id}>
                                     {item.icon}
                                     <p className="ml-2 font-normal">{item.name}</p>
                                 </button>

@@ -1,41 +1,53 @@
+import { Inertia } from "@inertiajs/inertia";
 import { motion } from "framer-motion";
 
 export default function DeleteBookForm({openDeleteDialog, setOpenDeleteDialog, book, setBook, setTitle, setOpen, setStatus}) {
 
-    const handleClick = (id) => {
-        fetch('https://reqres.in/api/users/2', {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
+    const handleClick = (e, id) => {
+        e.preventDefault();
+
+        if(id !== null) {
+        console.log(id)
+        Inertia.post('/admin/delete', {
+            'id': id,
+            onSuccess: () => {
+                console.log('success')
             }
         })
-        .then(res => res.json())
-        .then(res => {
-            setOpenDeleteDialog(false);
-            console.log(res);
-            if (res?.error) {
-                console.log(res)
-                setTitle(res?.error);
-                throw new Error('error')
-            } else {
-                setTitle('Berhasil Mengedit Buku');
-                setStatus(true);
-                setOpen(true);
-                setTimeout(() => {
-                    setOpen(false);
-                    window.location.reload();
-                }, 2000)
-            }
-        })
-        .catch(err => {
-            setOpenDeleteDialog(false);
-            console.log(err)
-            setStatus(false);
-            setOpen(true);
-            setTimeout(() => {
-                setOpen(false);
-            }, 2000)
-        })
+    }
+        // fetch('https://reqres.in/api/users/2', {
+        //     method: 'DELETE',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     }
+        // })
+        // .then(res => res.json())
+        // .then(res => {
+        //     setOpenDeleteDialog(false);
+        //     console.log(res);
+        //     if (res?.error) {
+        //         console.log(res)
+        //         setTitle(res?.error);
+        //         throw new Error('error')
+        //     } else {
+        //         setTitle('Berhasil Mengedit Buku');
+        //         setStatus(true);
+        //         setOpen(true);
+        //         setTimeout(() => {
+        //             setOpen(false);
+        //             window.location.reload();
+        //         }, 2000)
+        //     }
+        // })
+        // .catch(err => {
+        //     setOpenDeleteDialog(false);
+        //     console.log(err)
+        //     setStatus(false);
+        //     setOpen(true);
+        //     setTimeout(() => {
+        //         setOpen(false);
+        //     }, 2000)
+        // })
     }
 
     return (
@@ -56,8 +68,12 @@ export default function DeleteBookForm({openDeleteDialog, setOpenDeleteDialog, b
                     <div className="py-6 px-6 lg:px-8">
                         <h3 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Hapus</h3>
                         <p className="mb-4">Apakah anda yakin ingin menghapus item ini ({book?.title})?</p>
+                        <p>{book?.id}</p>
                         <button className="bg-[#F8BC61] 
-                                hover:bg-yellow-600 duration-200 focus:outline-yellow-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center text-black" onClick={handleClick}>Hapus Item</button>
+                                hover:bg-yellow-600 duration-200 focus:outline-yellow-300 font-bold rounded-lg text-sm px-5 py-2.5 text-center text-black" onClick={(e) => {
+                                    // e.preventDefault();
+                                    handleClick(e, book?.id)
+                                    }}>Hapus Item</button>
                     </div>
                 </motion.div>
             </div>
