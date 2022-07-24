@@ -1,8 +1,6 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Inertia } from "@inertiajs/inertia";
-import axios from "axios";
-import $ from 'jquery';
 
 export default function BookForm({ setOpenDialog, openDialog, book, setBook, role, setStatus, setTitle, setOpen }) {
     const bookInitState = {
@@ -18,21 +16,8 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
         bookInitState
     );
 
-    // 'title' => 'required|max:255',
-    //         'description' => 'required',
-    //         'author' => 'required',
-    //         'link' => 'required',
-    //         'category_id' => 'required',
     const addBookHandler = (e) => {
-        e.preventDefault();
-        console.log(`
-            'title': ${newBook.title},
-            'description': ${newBook.description},
-            'author': ${newBook.author},
-            'link': ${newBook.link},
-            'category_id': ${newBook.category_id}
-            `)
-            
+        e.preventDefault();  
         Inertia.post('/admin/create', {
             'title': newBook.title,
             'description': newBook.description,
@@ -40,79 +25,11 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
             'link': 'newBook.link',
             'category_id': 1
         })
-        // axios.post('/admin/create', {
-        //     'title': newBook.title,
-        //     'description': newBook.description,
-        //     'author': newBook.author,
-        //     'link': newBook.link,
-        //     'category_id': 1
-        // }, {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        //     }
-        // })
-        // // .then(res => res.json())
-        // .then(res => {
-        //     setOpenDialog(false);
-        //     if (res?.statusText !== 'OK') {
-        //         setTitle(res?.error);
-        //         throw new Error('error')
-        //     } else {
-        //         setTitle('Berhasil Menambahkan Buku');
-        //         setStatus(true);
-        //         setOpen(true);
-        //         setTimeout(() => {
-        //             setOpen(false);
-        //             window.location.reload();
-        //         }, 2000)
-        //     }
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        //     console.log(`
-        //     'title': ${newBook.title},
-        //     'description': ${newBook.description},
-        //     'author': ${newBook.author},
-        //     'link': ${newBook.link},
-        //     'category_id': ${newBook.category_id}
-        //     `)
-        //     setTitle('Gagal menambahkan Buku');
-        //     setStatus(false);
-        //     setOpen(true);
-        //     setTimeout(() => {
-        //         setOpen(false);
-        //     }, 2000)
-        // })
-        // fetch('https://reqres.in/api/users', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({"name": "morpheus", "job": "leader"})
-        // })
-        // .then(res => res.json())
-        // .then(res => {
-        //     setOpenDialog(false);
-        //     if (res?.error) {
-        //         setTitle(res?.error);
-        //         throw new Error('error')
-        //     } else {
-        //         setTitle('Berhasil Menambahkan Buku');
-        //         setStatus(true);
-        //         setOpen(true);
-        //         setTimeout(() => {
-        //             setOpen(false);
-        //             window.location.reload();
-        //         }, 2000)
-        //     }
-        // })
     }
 
     const editBookHandler = (e, id) => {
         e.preventDefault();
         Inertia.post('/admin/update', {
-            'id': id,
             'title': newBook.title,
             'description': newBook.description,
             'author': newBook.author,
@@ -122,7 +39,6 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
     }
 
     const handleSubmit = (e) => {
-        // e.preventDefault();
         if (role === 'tambah') {
             // fetch to add book
             addBookHandler(e)
