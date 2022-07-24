@@ -11,7 +11,8 @@ class Book extends Model
     protected $fillable = [
         'title',
         'description',
-        'author'
+        'author',
+        'link'
     ];
 
     public function scopeFilter($query, array $filters)
