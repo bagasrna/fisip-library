@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Category;
 use App\Models\Book;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class AdminController extends Controller
@@ -112,9 +113,16 @@ class AdminController extends Controller
         // Book::destroy($request->id);
 
         // sg iki kenek
-        $post = Book::findOrFail($request->id);
+        // $post = Book::findOrFail($request->id);
+        // $post->delete();
         
-        $post->delete();
+        $book = DB::table('books')->where('id', '=', $request->id)->get();
+
+        if ($book->count() > 0){
+            DB::table('books')->where('id', '=', $request->id)->delete();
+        } else {
+            return redirect('/admin/dashboard')->with('message', 'Book not yet deleted!');
+        }
 
         return redirect('/admin/dashboard')->with('message', 'Book has been deleted!');
     }
