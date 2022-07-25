@@ -61,9 +61,17 @@ class AdminController extends Controller
 
     public function index()
     {
+        $books = Book::latest();
+
+        if(request('search')){
+            $books->where('title', 'like', '%' . request('search') . '%')
+            ->orWhere('author', 'like', '%' . request('search') . '%');
+        }
+
         return Inertia::render('Admin/AdminDashboard', [
             'name' => auth()->user()->name,
-            'categories' => Category::all() 
+            'categories' => Category::all(),
+            'books' => $books->paginate(10)->withQueryString()
         ]);
     }
 
@@ -101,7 +109,12 @@ class AdminController extends Controller
 
     public function delete(Request $request,Book $book)
     {
-        Book::destroy($request->id);
+        // Book::destroy($request->id);
+
+        // sg iki kenek
+        $post = Book::findOrFail($request->id);
+        
+        $post->delete();
 
         return redirect('/admin/dashboard')->with('message', 'Book has been deleted!');
     }
