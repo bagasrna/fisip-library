@@ -4,11 +4,24 @@ import $ from 'jquery';
 import { Inertia } from "@inertiajs/inertia";
 
 export default function AdminNavbar({ className, name }) {
-    const [active, setActive] = React.useState(true);
+    const [open, setOpen] = React.useState(true);
+    const [width, setWidth] = React.useState(true);
 
     const handleClick = () => {
         Inertia.post('/admin/signout')
     }
+
+    window.addEventListener('resize', () => {
+        setWidth(window.innerWidth);
+    })
+
+    React.useEffect(() => {
+        if (width > 1024) {
+            setOpen(true);
+        } else if (width < 1024) {
+            setOpen(false);
+        }
+    }, [width])
 
     const navbarData = [
         {
@@ -30,28 +43,41 @@ export default function AdminNavbar({ className, name }) {
     ]
 
     return (
-        <div className="bg-[#F8BC61] lg:w-1/5 w-full">
-            <div className="admin-data p-5 mt-5 w-full">
-                <p className="font-bold text-3xl">Welcome</p>
-                <p className="font-bold mt-5">{name}</p>
-                <div className="flex items-center w-full">
-                    <p>example@student.ub.ac.id</p>
+        <div className={`bg-[#F8BC61] lg:w-1/5 w-full relative`}>
+            {
+                open &&
+                <div className={` ${width < 1024 ? "fixed top-6 shadow-2xl bg-[#F8BC61] w-full" : ""}`}>
+                    <div className="admin-data p-5 mt-16 w-full lg:mt-5">
+                        <p className="font-bold text-3xl">Welcome</p>
+                        <p className="font-bold mt-5">{name}</p>
+                        <div className="flex items-center w-full">
+                            <p>example@student.ub.ac.id</p>
+                        </div>
+                    </div>
+                    <div className="mt-5 text-sm font-bold">
+                        <p className="pt-5 px-5 mb-5">Dashboard</p>
+                        <div>
+                            {
+                                navbarData?.map(item => {
+                                    return (
+                                        <button onClick={item.action} className="w-full flex items-center p-5 hover:bg-gray-600 hover:text-white bg-transparent transition duration-200" key={item.id}>
+                                            {item.icon}
+                                            <p className="ml-2 font-normal">{item.name}</p>
+                                        </button>
+                                    );
+                                })
+                            }
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div className="mt-5 text-sm font-bold">
-                <p className="pt-5 px-5 mb-5">Dashboard</p>
-                <div>
-                    {
-                        navbarData?.map(item => {
-                            return (
-                                <button onClick={item.action} className="w-full flex items-center p-5 hover:bg-gray-600 hover:text-white bg-transparent transition duration-200" key={item.id}>
-                                    {item.icon}
-                                    <p className="ml-2 font-normal">{item.name}</p>
-                                </button>
-                            );
-                        })
-                    }
-                </div>
+            }
+            <div className="py-5 pr-5 pl-0 flex justify-between lg:hidden w-full lg:w-fit fixed top-0 bg-[#F8BC61]">
+                <button onClick={() => setOpen(!open)} className="text-white p-2 rounded-lg bg-red-500 ml-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                    </svg>
+                </button>
+                { !open && <div className="font-bold text-3xl mr-5">Welcome, <span className="text-lg font-normal">{name}</span></div> }
             </div>
         </div>
     );

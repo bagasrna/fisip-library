@@ -30,8 +30,8 @@ export default function AdminDashboard({name, categories}) {
         <div>
             <div className="dashboard-container min-h-screen flex lg:flex-row flex-col">
                 <AdminNavbar name={name}/>
-                <div className="book-data w-full h-screen overflow-y-scroll">
-                    <div className="px-10 pt-10 pb-5 flex items-center justify-between w-full">
+                <div className="book-data w-full lg:h-screen overflow-y-scroll">
+                    <div className="px-10 pt-10 pb-5 flex items-center justify-between w-full mt-20 lg:mt-0">
                         <p className="text-2xl font-bold">Data Buku</p>
                         <button onClick={() => { 
                             setRole('tambah');
@@ -44,8 +44,8 @@ export default function AdminDashboard({name, categories}) {
                             <p className="ml-2">Tambah Buku</p>
                         </button>
                     </div>
-                    <div className="search-bar pl-10 mb-5">
-                        <form className="w-2/5" onSubmit={handleSubmit} >
+                    <div className="search-bar pl-2 sm:pr-10 md:pl-10 pr-2 lg:pr-0 mb-5">
+                        <form className="w-full lg:pr-0 lg:w-2/5" onSubmit={handleSubmit} >
                             <input className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="cari berdasarkan judul atau penulis" onChange={(e) => setSearchValue(e.target.value)}/>
                             <input type="submit" className="hidden"/>
                         </form>
@@ -53,7 +53,7 @@ export default function AdminDashboard({name, categories}) {
                     <div className="result pl-10 mb-5">
                         <p>Showing {bookData?.data?.length} of {bookData?.total} result</p>
                     </div>
-                    <div className="px-10 mb-10">
+                    <div className="px-2 md:px-10 mb-10">
                         <DataTable searchValue={searchValue} books={bookData} setOpenDeleteDialog={setOpenDeleteDialog} setOpenDialog={setOpenDialog} setBook={setBook} setRole={setRole}/>
                     </div>
                 </div>
