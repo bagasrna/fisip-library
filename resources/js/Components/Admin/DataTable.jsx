@@ -1,4 +1,7 @@
-export default function DataTable({ books, setOpenDialog, setBook, setRole, setOpenDeleteDialog, searchValue }) {
+import React from "react";
+
+export default function DataTable({ books, setOpenDialog, setBook, setRole, setOpenDeleteDialog, categories }) {
+
     const handleClickAdd = (item) => {
         setRole('edit');
         setBook(item);
@@ -10,6 +13,18 @@ export default function DataTable({ books, setOpenDialog, setBook, setRole, setO
         setOpenDeleteDialog(true)
     }
 
+    const handleCategory = (category_id) => {
+        let category = '';
+
+        categories?.forEach((item) => {
+            if (item.id === category_id) {
+                category = item.name;
+            }
+        })
+
+        return category;
+    }
+
     return (
         <div className="text-black">
             <table className="w-full">
@@ -17,15 +32,11 @@ export default function DataTable({ books, setOpenDialog, setBook, setRole, setO
                     <tr className="flex w-full bg-[#E9E4E5]">
                         <th className="border-t-2 border-l-2 w-1/4 py-2 text-left ml-2">Judul</th>
                         <th className="border-t-2 border-l-2 w-1/4 py-2 text-left">Penulis</th>
-                        <th className="border-t-2 border-l-2 w-1/4 py-2 text-left">Jumlah</th>
+                        <th className="border-t-2 border-l-2 w-1/4 py-2 text-left">Kategori</th>
                         <th className="border-t-2 border-l-2 border-r-2 py-2 w-1/4">Tools</th>
                     </tr>
                     {
-                        books?.data?.filter(item => {
-                            if (searchValue === '')
-                                return item;
-                            return item.title.toUpperCase().includes(searchValue.toUpperCase());
-                        }).map((item) => {
+                        books?.data?.map((item) => {
                             return (
                                 <tr key={item?.id} className="w-full flex">
                                     <td className={`border-t-2 //border-l-2 ${item?.id === books?.data?.length ? "border-b-2" : ""} w-1/4 p-2`}>
@@ -35,7 +46,8 @@ export default function DataTable({ books, setOpenDialog, setBook, setRole, setO
                                         {item?.author}
                                     </td>
                                     <td className={`border-t-2 //border-l-2 ${item?.id === books?.data?.length ? "border-b-2" : ""} w-1/4 p-2`}>
-                                        {5} buah
+                                        {handleCategory(item?.category_id)}
+                                        {/* {item?.category_id} */}
                                     </td>
                                     <td className={`border-t-2 //border-l-2 //border-r-2 ${item?.id === books?.data?.length ? "border-b-2" : ""} w-1/4 p-2 flex justify-center`}>
                                         <button onClick={() => handleClickAdd(item)} className="edit-logo hover:text-gray-500 transition duration-150">

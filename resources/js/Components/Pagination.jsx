@@ -6,7 +6,7 @@ export default function Pagination({ links }) {
         <nav aria-label="Page navigation example">
             <ul className="inline-flex items-center -space-x-px">
                 {
-                    links.map((link, index) => {
+                    links?.map((link, index) => {
                         if (link?.label.includes('Previous')) {
                             return (
                                 <li key={index}>

@@ -3,28 +3,17 @@ import BookForm from "@/Components/Admin/BookForm";
 import DataTable from "@/Components/Admin/DataTable";
 import DeleteBookForm from "@/Components/Admin/DeleteBookForm";
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import Popup from "@/Components/Admin/Popup";
+import Pagination from "@/Components/Pagination";
 
-export default function AdminDashboard({name, categories}) {
-    const [bookData, setBookData] = React.useState([]);
+export default function AdminDashboard({name, categories, books}) {
     const [openDialog, setOpenDialog] = React.useState(false);
     const [book, setBook] = React.useState(null);
     const [role, setRole] = React.useState('');
     const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false);
-    const [searchValue, setSearchValue] = React.useState('');
     const [title, setTitle] = React.useState('');
     const [status, setStatus] = React.useState(false);
     const [open, setOpen] = React.useState(false);
-
-    React.useEffect(() => {
-        setBookData(JSON.parse(localStorage.getItem('books')));
-    }, [])
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(categories)
-    }
 
     return (
         <div>
@@ -45,21 +34,24 @@ export default function AdminDashboard({name, categories}) {
                         </button>
                     </div>
                     <div className="search-bar pl-2 sm:pr-10 md:pl-10 pr-2 lg:pr-0 mb-5">
-                        <form className="w-full lg:pr-0 lg:w-2/5" onSubmit={handleSubmit} >
-                            <input className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="cari berdasarkan judul atau penulis" onChange={(e) => setSearchValue(e.target.value)}/>
+                        <form action="/admin/dashboard" className="w-full lg:pr-0 lg:w-2/5">
+                            <input name="search" className="bg-gray-50 border outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="cari berdasarkan judul atau penulis"/>
                             <input type="submit" className="hidden"/>
                         </form>
                     </div>
                     <div className="result pl-10 mb-5">
-                        <p>Showing {bookData?.data?.length} of {bookData?.total} result</p>
+                        <p>Showing {books?.data?.length} of {books?.total} result</p>
                     </div>
                     <div className="px-2 md:px-10 mb-10">
-                        <DataTable searchValue={searchValue} books={bookData} setOpenDeleteDialog={setOpenDeleteDialog} setOpenDialog={setOpenDialog} setBook={setBook} setRole={setRole}/>
+                        <DataTable books={books} setOpenDeleteDialog={setOpenDeleteDialog} setOpenDialog={setOpenDialog} setBook={setBook} setRole={setRole} categories={categories}/>
+                        <div className="w-full flex items-center justify-center my-10">
+                            <Pagination links={books?.links}/>
+                        </div>
                     </div>
                 </div>
             </div>
             <div>
-                <BookForm setTitle={setTitle} setStatus={setStatus} setOpen={setOpen} books={bookData} setOpenDialog={setOpenDialog} setBook={setBook} openDialog={openDialog} book={book} role={role}/>
+                <BookForm setTitle={setTitle} setStatus={setStatus} setOpen={setOpen} books={books} setOpenDialog={setOpenDialog} setBook={setBook} openDialog={openDialog} book={book} role={role} categories={categories}/>
             </div>
             <div>
                 <DeleteBookForm setTitle={setTitle} setStatus={setStatus} setOpen={setOpen} book={book} setBook={setBook} openDeleteDialog={openDeleteDialog} setOpenDeleteDialog={setOpenDeleteDialog}/>

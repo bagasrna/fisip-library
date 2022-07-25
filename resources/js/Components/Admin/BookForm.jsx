@@ -1,8 +1,8 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Inertia } from "@inertiajs/inertia";
 
-export default function BookForm({ setOpenDialog, openDialog, book, setBook, role, setStatus, setTitle, setOpen }) {
+export default function BookForm({ setOpenDialog, openDialog, book, setBook, role, setStatus, setTitle, setOpen, categories }) {
     const bookInitState = {
         title: book?.title,
         description: book?.description,
@@ -22,29 +22,28 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
             'title': newBook.title,
             'description': newBook.description,
             'author': newBook.author,
-            'link': 'newBook.link',
-            'category_id': 1
+            'link': newBook.link,
+            'category_id': newBook.category_id
         })
     }
 
     const editBookHandler = (e, id) => {
         e.preventDefault();
-        Inertia.post('/admin/update', {
-            'title': newBook.title,
-            'description': newBook.description,
-            'author': newBook.author,
-            'link': newBook.link,
-            'category_id': 2
+        Inertia.put('/admin/update', {
+            'id': id,
+            'title': newBook.title === undefined ? book?.title : newBook.title,
+            'description': newBook.description === undefined ? book?.description : newBook.description,
+            'author': newBook.author === undefined ? book?.author : newBook.author,
+            'link': newBook.link === undefined ? book?.link : newBook.link,
+            'category_id': newBook.category_id === undefined ? book?.category_id : newBook.category_id
         })
     }
 
     const handleSubmit = (e) => {
         if (role === 'tambah') {
-            // fetch to add book
             addBookHandler(e)
         }
         else if (role === 'edit') {
-            // fetch to edit book
             editBookHandler(e, book?.id);
         }
 
@@ -99,10 +98,16 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
                                                     <div className="ml-5 w-full lg:w-fit">
                                                         <label htmlFor="category" className="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Kategori</label>
                                                         <select name="category" placeholder="kategori" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
-                                                md:w-[165px] p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required onChange={e => setNewBook({ category_id: e.target.value })}>
-                                                            <option value={1} className="w-full">Web Programming</option>
-                                                            <option value={2} className="w-full">Anime</option>
-                                                            <option value={3} className="w-full">Personal</option>
+                                                md:w-[165px] p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required defaultValue={
+                                                    role === 'tambah' ? 1 : role === 'edit' ? book?.category_id : 1
+                                                } onChange={e => setNewBook({ category_id: parseInt(e.target.value) })}>
+                                                    {
+                                                        categories?.map((item) => {
+                                                            return(
+                                                                <option key={item?.id} value={item?.id} className="w-full">{item?.name}</option>
+                                                            );   
+                                                        })
+                                                    }
                                                         </select>
                                                     </div>
                                                 </div>
