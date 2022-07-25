@@ -3,7 +3,7 @@ import Navbar from "@/Components/Navbar";
 import { Head } from "@inertiajs/inertia-react";
 import React from "react";
 
-export default function DetailBuku({name, book}) {
+export default function DetailBuku({ name, book }) {
     const [selectDetail, setSelectDetail] = React.useState(true);
     const [selectSinopsis, setSelectSinopsis] = React.useState(false);
     console.log(book)
@@ -20,15 +20,10 @@ export default function DetailBuku({name, book}) {
 
     return (
         <div>
-            <Head title={book?.title}/>
+            <Head title={book?.title} />
             <Navbar userName={name} />
             {book === null || book === undefined ? <div>Buku Tidak ditemukan</div> :
                 <div className="mt-32 md:mt-28 md:mb-20 w-full p-10 flex flex-col lg:flex-row justify-center items-center lg:justify-start lg:items-start">
-                    {/* <div className="detail-image lg:w-1/5">
-                        <div className="w-full bg-[#E9E4E5] rounded-md py-3 px-5">
-                            <img src={bookData?.volumeInfo?.imageLinks?.smallThumbnail} width="100%" />
-                        </div>
-                    </div> */}
                     <div className="detail-content w-full">
                         <div className="flex items-center lg:items-start justify-between flex-col lg:flex-row mt-5 mb-10 lg:mt-0 lg:mb-0">
                             <div className="book-title text-center lg:text-start">
@@ -51,43 +46,56 @@ export default function DetailBuku({name, book}) {
                                 <h3 onClick={handleSinopsis} className={`cursor-pointer border-b-2 ${selectSinopsis ? 'border-gray-900 font-bold' : 'border-transparent'} transition duration-300  md:text-center pb-2`}>Sinopsis</h3>
                             </div>
                         </div>
-                        {
-                            selectDetail ? <div className="flex flex-wrap justify-between lg:justify-around w-full md:text-center lg:text-left">
-                                <div>
-                                    <div className="my-7 lg:mt-20">
-                                        <h4 className="font-bold">ISBN</h4>
-                                        <p>{book?.id}</p>
+                        <div>
+                            {
+                                selectDetail ? <div className="flex flex-wrap justify-between lg:justify-around w-full md:text-center lg:text-left">
+                                    <div>
+                                        <div className="my-7 lg:mt-20">
+                                            <h4 className="font-bold">ISBN</h4>
+                                            <p>{book?.id}</p>
+                                        </div>
+                                        <div className="my-7 lg:mt-20">
+                                            <h4 className="font-bold">Kunjungi Link</h4>
+                                            <a href={book?.link} target="_blank">berikut</a>
+                                        </div>
                                     </div>
-                                    <div className="my-7 lg:mt-20">
-                                        <h4 className="font-bold">Jumlah Stok</h4>
-                                        <p>5 Buah</p>
+                                    <div>
+                                        <div className="my-7 lg:mt-20">
+                                            <h4 className="font-bold">Penerbit</h4>
+                                            <p>penerbit</p>
+                                        </div>
+                                        <div className="my-7 lg:mt-20">
+                                            <h4 className="font-bold">Bahasa</h4>
+                                            <p>Indonesia</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="my-7 lg:mt-20">
+                                            <h4 className="font-bold">Id Kategori</h4>
+                                            <p>{book?.category_id}</p>
+                                        </div>
+                                        <div className="my-7 lg:mt-20">
+                                            <h4 className="font-bold">Waktu Dibuat</h4>
+                                            <p>{book?.created_at}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <div className="my-7 lg:mt-20">
-                                        <h4 className="font-bold">Penerbit</h4>
-                                        <p>penerbit</p>
-                                    </div>
-                                    <div className="my-7 lg:mt-20">
-                                        <h4 className="font-bold">Bahasa</h4>
-                                        <p>Indonesia</p>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className="my-7 lg:mt-20">
-                                        <h4 className="font-bold">Id Kategori</h4>
-                                        <p>{book?.category_id}</p>
-                                    </div>
-                                    <div className="my-7 lg:mt-20">
-                                        <h4 className="font-bold">Waktu Dibuat</h4>
-                                        <p>{book?.created_at}</p>
-                                    </div>
-                                </div>
-                            </div> 
-                            : 
-                            <div className="mt-10  lg:mt-20" dangerouslySetInnerHTML={{__html: book?.description}}></div>
-                        }
-
+                                    :
+                                    <div className="mt-10  lg:mt-20" dangerouslySetInnerHTML={{ __html: book?.description }}></div>
+                            }
+                            <div className="mt-7 lg:ml-32">
+                                <h4 className="font-bold mb-5">Tautan Buku</h4>
+                                <a href={book?.link} target="_blank">
+                                    <button className=" bg-red-700 text-white py-2 px-5 rounded-lg flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                                            <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                                        </svg>
+                                        <p className="ml-2">Kunjungi buku</p>
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             }

@@ -31,7 +31,7 @@ export default function Navbar({ userName }) {
         })
             .then(res => {
                 console.log(res);
-                localStorage.clear();
+                // localStorage.removeItem;
                 window.location.reload();
             })
             .catch(err => {
@@ -62,7 +62,9 @@ export default function Navbar({ userName }) {
                 </form>
             </div>
             <div className="search-buttons w-2/5 justify-end hidden lg:flex">
-                <Button className="bg-amber-400 text-black py-2">Rak Buku</Button>
+                <InertiaLink href="/dashboard/rak-buku">
+                    <Button className="bg-amber-400 text-black py-2">Rak Buku</Button>
+                </InertiaLink>
             </div>
             <div className={`collapse ${open ? "" : "hidden"} lg:hidden flex w-full flex-col items-center pb-5`}>
                 <div className="search-buttons flex flex-col justify-around w-full -ml-12">

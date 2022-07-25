@@ -40,8 +40,9 @@ Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallba
 
 //dashboard
 Route::get('/dashboard', [BookController::class, 'index'])->middleware('auth:web');
-Route::get('/dashboard/{book:id}', [BookController::class, 'detail'])->middleware('auth:web');
 Route::get('/dashboard/rak-buku', [BookController::class, 'rak'])->middleware('auth:web'); // mengembalikan array 'categories' yang berisi category-category
+Route::get('/dashboard/{book:id}', [BookController::class, 'detail'])->middleware('auth:web');
+
 
 // login dashboard admin
 Route::get('/admin/signin', [AdminController::class, 'login'])->name('admin.signin')->middleware('guest');
