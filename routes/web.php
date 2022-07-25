@@ -56,8 +56,8 @@ Route::post('/admin/signup', [AdminController::class, 'store']);
 // dashboard admin
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware('auth:admin');
 Route::post('/admin/create', [AdminController::class, 'create']); // add buku
-Route::post('/admin/update', [AdminController::class, 'update']); // edit buku
-Route::post('/admin/delete', [AdminController::class, 'delete']); // edit buku
+Route::put('/admin/update', [AdminController::class, 'update']); // edit buku
+Route::delete('/admin/delete', [AdminController::class, 'delete']); // edit buku
 
 
 require __DIR__.'/auth.php';

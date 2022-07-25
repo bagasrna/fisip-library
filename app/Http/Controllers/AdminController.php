@@ -25,7 +25,7 @@ class AdminController extends Controller
             return redirect()->intended('/admin/dashboard');
         }
 
-        return back()->with('loginError', 'Login failed!');
+        return redirect('/admin/signin')->with('message', 'Login failed!');
     }
 
     public function logout(Request $request)
@@ -56,7 +56,7 @@ class AdminController extends Controller
 
         Admin::create($validatedData);
 
-        return redirect('/admin/signin')->with('success', 'Registration seccessfull! Please login');
+        return redirect('/admin/signin')->with('message', 'Registration seccessfull! Please login');
     }
 
     public function index()
@@ -70,7 +70,7 @@ class AdminController extends Controller
     public function create(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'required|max:255',
+            'title' => 'required|unique:books|max:255',
             'description' => 'required',
             'author' => 'required',
             'link' => 'required',
@@ -79,7 +79,7 @@ class AdminController extends Controller
 
         Book::create($validatedData);
 
-        return redirect('/admin/dashboard')->with('success', 'New book has been added!');
+        return redirect('/admin/dashboard')->with('message', 'New book has been added!');
     }
 
     public function update(Request $request, Book $book)
@@ -94,16 +94,16 @@ class AdminController extends Controller
 
         $validatedData = $request->validate($rules);
 
-        Book::where('id', $book->id)->update($validatedData);
+        Book::where('id', $request->id)->update($validatedData);
 
-        return redirect('/admin/dashboard')->with('success', 'Book has been updated!');
+        return redirect('/admin/dashboard')->with('message', 'Book has been updated!');
     }
 
-    public function delete(Book $book)
+    public function delete(Request $request,Book $book)
     {
-        Book::destroy($book->id);
+        Book::destroy($request->id);
 
-        return redirect('/admin/dashboard')->with('success', 'Book has been deleted!');
+        return redirect('/admin/dashboard')->with('message', 'Book has been deleted!');
     }
 
     public function test()
@@ -123,7 +123,7 @@ class AdminController extends Controller
 
         Admin::create($validatedData);
 
-        return redirect('/test/signin')->with('success', 'Registration seccessfull! Please login');
+        return redirect('/test/signin')->with('message', 'Registration seccessfull! Please login');
     }
 
     public function test3()
@@ -139,7 +139,7 @@ class AdminController extends Controller
             return redirect()->intended('/test/dashboard');
         }
 
-        return back()->with('loginError', 'Login failed!');
+        return back()->with('message', 'Login failed!');
     }
 
     public function test5()
