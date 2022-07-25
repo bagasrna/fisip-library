@@ -23,6 +23,13 @@ export default function AdminNavbar({ className, name }) {
         }
     }, [width])
 
+    React.useEffect(() => {
+        if (window.innerWidth > 1024) {
+            setOpen(true);
+            setWidth(1025);
+        }
+    }, [])
+
     const navbarData = [
         {
             id: 1,
