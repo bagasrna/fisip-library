@@ -22,6 +22,7 @@ class BookFactory extends Factory
                         ->map(fn($p) => "<p>$p</p>")
                         ->implode(''),
             'author' => $this->faker->name(),
+            'link' => $this->faker->bothify('https://drive.google.com/drive/folders/?#?#?#?#?#?#?#?#?#?#'),
             'category_id' => mt_rand(1,3)
         ];
     }

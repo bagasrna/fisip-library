@@ -1,24 +1,51 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Inertia } from "@inertiajs/inertia";
 
-export default function BookForm({ setOpenDialog, openDialog, book, setBook, role }) {
-    const addBookHandler = (id) => {
-
+export default function BookForm({ setOpenDialog, openDialog, book, setBook, role, setStatus, setTitle, setOpen }) {
+    const bookInitState = {
+        title: '',
+        description: '',
+        author: '',
+        link: '',
+        category_id: null
     }
 
-    const editBookHandler = (id) => {
+    const [newBook, setNewBook] = React.useReducer(
+        (newBook, newBooks) => ({...newBook, ...newBooks}),
+        bookInitState
+    );
 
+    const addBookHandler = (e) => {
+        e.preventDefault();  
+        Inertia.post('/admin/create', {
+            'title': newBook.title,
+            'description': newBook.description,
+            'author': newBook.author,
+            'link': 'newBook.link',
+            'category_id': 1
+        })
+    }
+
+    const editBookHandler = (e, id) => {
+        e.preventDefault();
+        Inertia.post('/admin/update', {
+            'title': newBook.title,
+            'description': newBook.description,
+            'author': newBook.author,
+            'link': newBook.link,
+            'category_id': 2
+        })
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault();
         if (role === 'tambah') {
             // fetch to add book
-            addBookHandler(book?.id)
+            addBookHandler(e)
         }
         else if (role === 'edit') {
             // fetch to edit book
-            editBookHandler(book?.id);
+            editBookHandler(e, book?.id);
         }
     }
 
@@ -48,26 +75,30 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
                                     <div className="w-3/5">
                                         <div className="mb-5">
                                             <label htmlFor="email" className="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Judul Buku</label>
-                                            <input type="text" name="judul" id="judul" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="book title" required defaultValue={book?.title} />
+                                            <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" placeholder="book title" required defaultValue={book?.title} onChange={(e) => setNewBook({title: e.target.value})}/>
                                         </div>
                                         <div className="flex items-center mb-5">
                                             <div>
                                                 <label htmlFor="password" className="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Nama Penulis</label>
-                                                <input type="text" name="penulis" placeholder="contoh nama penulis" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required defaultValue={book?.author} />
+                                                <input type="text" name="author" placeholder="contoh nama penulis" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required defaultValue={book?.author}  onChange={(e) => setNewBook({author: e.target.value})}/>
                                             </div>
                                             <div className="ml-5">
-                                                <label htmlFor="password" className="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">ISBN</label>
+                                                <label htmlFor="isbn" className="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">ISBN</label>
                                                 <input type="text" name="ISBN" placeholder="ISBN" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required defaultValue={book?.id} />
                                             </div>
                                         </div>
                                         <div className="flex items-center mb-5">
                                             <div>
-                                                <label htmlFor="password" className="block mb-2 text-sm font-boldtext-gray-900 dark:text-gray-300 font-bold">Penerbit</label>
-                                                <input type="text" name="penerbit" placeholder="penerbit" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required defaultValue={book?.author} />
+                                                <label htmlFor="link" className="block mb-2 text-sm font-boldtext-gray-900 dark:text-gray-300 font-bold">Link</label>
+                                                <input type="text" name="link" placeholder="link" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required defaultValue={book?.link} onChange={(e) => setNewBook({link: e.target.value})}/>
                                             </div>
                                             <div className="ml-5">
-                                                <label htmlFor="bahasa" className="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Bahasa</label>
-                                                <input type="text" name="bahasa" placeholder="Bahasa" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required defaultValue="Indonesia" />
+                                                <label htmlFor="category" className="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Kategori</label>
+                                                <select name="category" placeholder="kategori" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full md:w-[157px] p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required  onChange={e => setNewBook({category_id: e.target.value})}>
+                                                    <option value={1} className="w-full">Web Programming</option>
+                                                    <option value={2} className="w-full">Anime</option>
+                                                    <option value={3} className="w-full">Personal</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <button type="submit" className="w-full bg-[#F8BC61] 
@@ -80,7 +111,7 @@ export default function BookForm({ setOpenDialog, openDialog, book, setBook, rol
                                     <div className="ml-5 w-2/5">
                                         <div>
                                             <label htmlFor="password" className="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-300">Deskripsi</label>
-                                            <textarea type="text" name="deskripsi" placeholder="deskripsi" className="bg-gray-50 min-h-[222px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required defaultValue={book?.description} />
+                                            <textarea type="text" name="description" placeholder="deskripsi" className="bg-gray-50 min-h-[222px] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required defaultValue={book?.description}  onChange={(e) => setNewBook({description: e.target.value})}/>
                                         </div>
                                     </div>
                                 </form>

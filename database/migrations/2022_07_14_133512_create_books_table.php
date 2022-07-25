@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description');
             $table->string('author');
+            $table->string('link');
             $table->foreignId('category_id');
             $table->timestamps();
         });
